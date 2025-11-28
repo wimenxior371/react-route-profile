@@ -3,8 +3,8 @@ import {
   DEFAULT_CENTER,
   DEFAULT_ZOOM_HORIZONTAL,
   DEFAULT_ZOOM_VERTICAL,
+  markers,
 } from "../../constants";
-import { useMarkers } from "../../hooks/useMarkers";
 import type { RouteDetail } from "../../types";
 import "./GoogleMapCanvas.css";
 
@@ -19,15 +19,12 @@ export const GoogleMapCanvas = ({
   height,
   isHorizontal,
 }: GoogleMapCanvasProps) => {
-  const markerIcons = useMarkers();
   const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!ref.current || !window.google?.maps) {
       return;
     }
-
-    ref.current.innerHTML = "";
 
     const zoom =
       (isHorizontal && (route.zoomHorizontal || DEFAULT_ZOOM_HORIZONTAL)) ||
@@ -51,10 +48,10 @@ export const GoogleMapCanvas = ({
         strokeWeight: 10,
         icon: {
           url: isFirst
-            ? markerIcons.start
+            ? markers.start
             : isLast
-            ? markerIcons.finish
-            : markerIcons.default,
+            ? markers.finish
+            : markers.default,
           scaledSize: new window.google.maps.Size(50, 50),
           optimized: false,
           zIndex: isFirst || isLast ? 100 : 10,
@@ -78,7 +75,7 @@ export const GoogleMapCanvas = ({
         map.data.remove(feature);
       });
     };
-  }, [route, isHorizontal, markerIcons]);
+  }, [route, isHorizontal]);
 
   return (
     <div

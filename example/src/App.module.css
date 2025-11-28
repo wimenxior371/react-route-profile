@@ -3,6 +3,10 @@ a {
   text-decoration: none;
 }
 
+h3 {
+  color: rgba(14, 165, 233, 0.7)
+}
+
 .container {
   min-height: 100vh;
   display: flex;
