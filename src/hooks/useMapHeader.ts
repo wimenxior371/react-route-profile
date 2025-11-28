@@ -1,7 +1,8 @@
 import { useMeasure } from "@uidotdev/usehooks";
+import { RATIO_HEADER_DESKTOP, RATIO_HEADER_MOBILE } from "../constants";
 import { useOrientation } from "./useOrientation";
 
-const FALLBACK_HEADER_PX = 100;
+const HEADER_FALLBACK_PX = 100;
 
 export const useMapHeader = () => {
   const { isVertical } = useOrientation();
@@ -9,9 +10,9 @@ export const useMapHeader = () => {
   const [refHeader, { height: headerHeight }] = useMeasure();
   const [refMapContainer, { height: mapContainerHeight }] = useMeasure();
 
-  const targetHeaderFraction = isVertical ? 0.25 : 0.15;
-  const viewportHeight = typeof window !== "undefined" ? window.innerHeight : FALLBACK_HEADER_PX / targetHeaderFraction;
-  const fallbackHeaderHeightPx = viewportHeight * targetHeaderFraction || FALLBACK_HEADER_PX;
+  const targetHeaderFraction = isVertical ? RATIO_HEADER_MOBILE : RATIO_HEADER_DESKTOP;
+  const viewportHeight = typeof window !== "undefined" ? window.innerHeight : HEADER_FALLBACK_PX / targetHeaderFraction;
+  const fallbackHeaderHeightPx = viewportHeight * targetHeaderFraction || HEADER_FALLBACK_PX;
   const effectiveHeaderHeight = headerHeight || fallbackHeaderHeightPx;
   const mapHeightStyle = `calc(100vh - ${effectiveHeaderHeight}px)`;
   const mapHeight = mapContainerHeight || mapHeightStyle;

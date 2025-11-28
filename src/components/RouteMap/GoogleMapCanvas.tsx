@@ -38,7 +38,7 @@ export const GoogleMapCanvas = ({
       streetViewControl: false,
     });
 
-    map.data.setStyle((feature: any) => {
+    map.data.setStyle((feature: google.maps.Data.Feature) => {
       const name = feature.getProperty("name") as string;
       const isFirst = feature.getProperty("first") as boolean;
       const isLast = feature.getProperty("last") as boolean;
@@ -68,10 +68,10 @@ export const GoogleMapCanvas = ({
       };
     });
 
-    map.data.addGeoJson(route.geoJson as any);
+    map.data.addGeoJson(route.geoJson);
 
     return () => {
-      map.data.forEach((feature: any) => {
+      map.data.forEach((feature: google.maps.Data.Feature) => {
         map.data.remove(feature);
       });
     };

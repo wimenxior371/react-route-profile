@@ -1,5 +1,5 @@
 import { Status, Wrapper } from "@googlemaps/react-wrapper";
-import { type CSSProperties } from "react";
+import type { CSSProperties } from "react";
 import { useOrientation } from "../../hooks/useOrientation";
 import type { RouteConfig } from "../../types";
 import Loader from "../Loader";

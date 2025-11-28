@@ -5,7 +5,6 @@ const getIsLandscape = () => {
   return window.innerWidth >= window.innerHeight;
 };
 
-
 export const useOrientation = () => {
   const [isHorizontal, setIsHorizontal] = useState<boolean>(getIsLandscape);
 

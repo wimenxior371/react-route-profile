@@ -130,18 +130,6 @@ h4 {
   width: 22%;
 }
 
-/* .steps {
-  padding-left: 1em;
-}
-
-.steps li {
-  margin-bottom: 0.75em;
-}
-
-.steps li:last-child {
-  margin-bottom: 0;
-} */
-
 @media (orientation: portrait) {
   .title {
     font-size: 2em;
@@ -164,8 +152,6 @@ h4 {
     border-radius: 0;
     border-left: 0;
     border-right: 0;
-    /* padding: 0;
-    margin: 0; */
   }
 
   .apiTable {
@@ -173,25 +159,10 @@ h4 {
     border-radius: 0;
     border-left: 0;
     border-right: 0;
-        /* padding: 0;
-    margin: 0; */
   }
 
   .content section > :not(.codeBlock):not(.apiTable) {
     margin-left: 20px;
     margin-right: 20px;
   }
-
-  /* .steps {
-  padding-left: 0em;
-}
-
-.steps li {
-  padding-left: 0;
-  margin-left: 0;
-}
-
-.steps li:last-child {
-  margin-bottom: 0;
-} */
 }
