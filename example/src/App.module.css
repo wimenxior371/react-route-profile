@@ -1,3 +1,8 @@
+a {
+  color: #84CC16;
+  text-decoration: none;
+}
+
 .container {
   min-height: 100vh;
   display: flex;
@@ -32,6 +37,12 @@
   letter-spacing: 0.1em;
 }
 
+.scrollDown {
+  font-size: 1em;
+  font-weight: 300;
+  margin-top: 1em;
+}
+
 .inlineCode {
   background: rgba(56, 189, 248, 0.08);
   border: 1px solid rgba(56, 189, 248, 0.25);
@@ -55,8 +66,61 @@
   background: #0b1224;
 }
 
+.codeBlock {
+  margin: 1.25em 0;
+  padding: 1em;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  overflow: auto;
+}
+
+.link {
+  color: #4ade80;
+  text-decoration: underline;
+}
+
+.apiTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.apiTable th,
+.apiTable td {
+  padding: 0.5em 0.75em;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.apiTable thead th {
+  background: rgba(255, 255, 255, 0.08);
+  font-weight: 600;
+}
+
+.apiTable th:last-child,
+.apiTable td:last-child {
+  border-right: none;
+}
+
+.apiTable tr:last-child th,
+.apiTable tr:last-child td {
+  border-bottom: none;
+}
+
+.apiTable th:first-child,
+.apiTable td:first-child,
+.apiTable th:nth-child(2),
+.apiTable td:nth-child(2) {
+  width: 22%;
+}
+
 .steps {
-  padding-left: 1.5em;
+  padding-left: 1em;
 }
 
 .steps li {
@@ -78,5 +142,13 @@
 
   body {
     font-size: 1.2em;
+  }
+
+  .codeBlock {
+    font-size: 0.8em;
+  }
+
+  .apiTable {
+    font-size: 0.6em;
   }
 }
