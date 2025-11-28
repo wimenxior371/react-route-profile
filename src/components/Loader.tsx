@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { theme } from "../theme";
 import styles from "./Loader.module.css";
 
 interface LoaderProps {
@@ -12,6 +13,8 @@ const Loader = ({
 }: LoaderProps) => {
   const style: CSSProperties = {
     height,
+    background: theme.colors.surface,
+    color: theme.colors.primary,
   };
 
   return (

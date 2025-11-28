@@ -5,6 +5,7 @@ import {
   DEFAULT_ZOOM_VERTICAL,
   markers,
 } from "../../constants";
+import { theme } from "../../theme";
 import type { RouteConfig } from "../../types";
 import styles from "./GoogleMapCanvas.module.css";
 
@@ -44,7 +45,7 @@ export const GoogleMapCanvas = ({
       const isLast = feature.getProperty("last") as boolean;
 
       return {
-        strokeColor: "rgba(14, 165, 233, 0.7)",
+        strokeColor: theme.colors.primaryMuted,
         strokeWeight: 10,
         icon: {
           url: isFirst
@@ -60,9 +61,9 @@ export const GoogleMapCanvas = ({
         },
         label: {
           className: styles.markerLabel,
-          color: "#84CC16",
           fontSize: "20px",
           fontWeight: "bold",
+          color: theme.colors.accent,
           text: name,
         },
       };
@@ -80,11 +81,9 @@ export const GoogleMapCanvas = ({
   return (
     <div
       ref={ref}
+      className={styles.mapCanvas}
       style={{
         height,
-        width: "100%",
-        overflow: "hidden",
-        boxShadow: "0 10px 30px rgba(15, 23, 42, 0.16)",
       }}
     />
   );

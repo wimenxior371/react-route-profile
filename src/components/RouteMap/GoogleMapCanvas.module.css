@@ -8,3 +8,8 @@
   border-radius: 9999px; /* rounded-full */
   padding: 0.5rem; /* p-2 */
 }
+
+.mapCanvas {
+  width: 100%;
+  overflow: hidden;
+}
