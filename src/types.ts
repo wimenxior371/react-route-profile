@@ -1,4 +1,4 @@
-export interface RouteDetail {
+export interface RouteConfig {
   id: string;
   name: string;
   center: { lat: number; lng: number };

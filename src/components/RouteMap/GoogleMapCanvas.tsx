@@ -5,11 +5,11 @@ import {
   DEFAULT_ZOOM_VERTICAL,
   markers,
 } from "../../constants";
-import type { RouteDetail } from "../../types";
+import type { RouteConfig } from "../../types";
 import "./GoogleMapCanvas.css";
 
 interface GoogleMapCanvasProps {
-  route: RouteDetail;
+  route: RouteConfig;
   height: number | string;
   isHorizontal: boolean;
 }

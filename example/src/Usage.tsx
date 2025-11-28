@@ -26,14 +26,14 @@ export const Usage = () => (
       </li>
       <li>
         Route Configuration - Build a{" "}
-        <code className={styles.inlineCode}>RouteDetail</code> with{" "}
+        <code className={styles.inlineCode}>RouteConfig</code> with{" "}
         <code
           className={styles.inlineCode}
         >{`{ id, name, center, zoomHorizontal?, zoomVertical?, geoJson }`}</code>
         .
         <pre className={styles.codeBlock}>
           <code>
-            {`const myRoute: RouteDetail = {
+            {`const myRoute: RouteConfig = {
   id: "01",
   name: "Sample route",
   center: { lat: 48.9, lng: 20.5 },
@@ -45,7 +45,7 @@ export const Usage = () => (
         </pre>
       </li>
       <li>
-        Pass that <code className={styles.inlineCode}>RouteDetail</code> to{" "}
+        Pass that <code className={styles.inlineCode}>RouteConfig</code> to{" "}
         <code className={styles.inlineCode}>{`<RouteMap route=... />`}</code>.
         <pre className={styles.codeBlock}>
           <code>
@@ -132,7 +132,7 @@ export const Usage = () => (
         </tr>
         <tr>
           <td>route</td>
-          <td>RouteDetail</td>
+          <td>RouteConfig</td>
           <td>Route data to render (center, zooms, geoJson).</td>
         </tr>
         <tr>
@@ -153,7 +153,7 @@ export const Usage = () => (
       </tbody>
     </table>
 
-    <h4>RouteDetail</h4>
+    <h4>RouteConfig</h4>
     <table className={styles.apiTable}>
       <thead>
         <tr>

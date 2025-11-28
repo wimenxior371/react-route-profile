@@ -1,13 +1,13 @@
 import { Status, Wrapper } from "@googlemaps/react-wrapper";
 import { type CSSProperties } from "react";
 import { useOrientation } from "../../hooks/useOrientation";
-import type { RouteDetail } from "../../types";
+import type { RouteConfig } from "../../types";
 import Loader from "../Loader";
 import { GoogleMapCanvas } from "./GoogleMapCanvas";
 
 export interface RouteMapProps {
   apiKey: string;
-  route: RouteDetail;
+  route: RouteConfig;
   height?: number | string;
   className?: string;
   style?: CSSProperties;
