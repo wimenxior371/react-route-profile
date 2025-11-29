@@ -18,7 +18,7 @@ export const ElevationTooltip = ({
 }: ElevationTooltipProps) => {
   if (!active || !payload?.length) return null;
 
-  const point = payload[0]?.payload as any;
+  const point = payload[0]?.payload;
   const marker = markers.find(
     (m) =>
       Math.abs((m?.distance ?? -1) - (point?.distance ?? 0)) <=

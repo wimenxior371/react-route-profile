@@ -1,3 +1,15 @@
+import type { ElevationPoint, Marker } from "./types";
+
+export const getMaxDistance = (points: ElevationPoint[]) => points.length ? points[points.length - 1].distance : 0;
+
+export const getPoints = (route: any): ElevationPoint[] => {
+  const raw =
+    (route.geoJson as any)?.properties?.elevationProfile?.points || [];
+  return [...raw].sort(
+    (a: ElevationPoint, b: ElevationPoint) => (a?.distance ?? 0) - (b?.distance ?? 0)
+  );
+};
+
 export const computeMinMax = (points: Array<{ elevation: number }>) => {
   if (!points.length) return [0, 0] as const;
   const elevations = points.map((p) => p.elevation);
@@ -7,14 +19,14 @@ export const computeMinMax = (points: Array<{ elevation: number }>) => {
   return [Math.floor(min - pad), Math.ceil(max + pad)];
 };
 
-export const computeRoundedDomainAndTicks = (
-  minMax: [number, number]
-) => {
+export const computeRoundedDomainAndTicks = (minMax: [number, number]) => {
   const [min, max] = minMax;
   const paddedRange = (max - min) * 1.2;
   const step = Math.max(10, Math.round(paddedRange / 6 / 10) * 10 || 50);
-  const graphMin = Math.floor((min - (paddedRange - (max - min)) / 2) / step) * step;
-  const graphMax = Math.ceil((max + (paddedRange - (max - min)) / 2) / step) * step;
+  const graphMin =
+    Math.floor((min - (paddedRange - (max - min)) / 2) / step) * step;
+  const graphMax =
+    Math.ceil((max + (paddedRange - (max - min)) / 2) / step) * step;
   const ticks: number[] = [];
   for (let v = graphMin; v <= graphMax + step / 2; v += step) {
     ticks.push(v);
@@ -23,26 +35,17 @@ export const computeRoundedDomainAndTicks = (
   return [graphMin, graphMax, ticks] as const;
 };
 
-type ElevationPoint = {
-  lat: number;
-  lng: number;
-  distance: number;
-  elevation: number;
-};
-
 export const computeMarkerPoints = (
   elevationPoints: ElevationPoint[],
   geoJson: any
 ) => {
   if (!elevationPoints?.length) return [];
   const features = geoJson?.features ?? [];
-  const pointFeatures = features.filter((f: any) => f?.geometry?.type === "Point");
+  const pointFeatures = features.filter(
+    (f: any) => f?.geometry?.type === "Point"
+  );
 
-  const markers: Array<{
-    distance: number;
-    elevation: number;
-    name?: string;
-  }> = [];
+  const markers: Array<Marker> = [];
 
   pointFeatures.forEach((f: any) => {
     const coords = f?.geometry?.coordinates;
@@ -54,9 +57,7 @@ export const computeMarkerPoints = (
       dist: number;
     }>(
       (acc, p) => {
-        const d =
-          Math.pow(p.lat - lat, 2) +
-          Math.pow(p.lng - lng, 2);
+        const d = Math.pow(p.lat - lat, 2) + Math.pow(p.lng - lng, 2);
         if (d < acc.dist) {
           return { point: p, dist: d };
         }
@@ -77,5 +78,18 @@ export const computeMarkerPoints = (
     }
   });
 
-  return markers;
+  return markers.sort((a, b) => (a.distance ?? 0) - (b.distance ?? 0));
+};
+
+const DISTANCE_THRESHOLD = 1000; // meters
+
+export const isCloseCheck = (
+  marker1: Marker,
+  marker2?: Marker,
+  threshold: number = DISTANCE_THRESHOLD
+) => {
+  return (
+    marker2 &&
+    Math.abs((marker1.elevation ?? 0) - (marker2.elevation ?? 0)) <= threshold
+  );
 };

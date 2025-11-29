@@ -1,3 +1,4 @@
+import { useId } from "react";
 import { markers } from "../../../constants";
 
 export const MarkerShape = (props: any) => {
@@ -21,21 +22,50 @@ export const MarkerShape = (props: any) => {
         height={size}
         href={markers.default}
       />
-      {name ? (
-        <text
-          y={cy - words.length * 10}
-          fill={fill || "#fff"}
-          fontSize={12}
-          fontWeight={300}
-          letterSpacing={2}
-        >
-          {words.map((word, idx) => (
-            <tspan key={`${word}-${idx}`} x={cx + 15} dy={idx === 0 ? 0 : 12}>
-              {word}
-            </tspan>
-          ))}
-        </text>
-      ) : null}
+      {name ? <Text words={words} cx={cx} cy={cy} fill={fill} /> : null}
     </g>
+  );
+};
+
+const Text = ({
+  words,
+  cx,
+  cy,
+  fill,
+}: {
+  words: string[];
+  cx: number;
+  cy: number;
+  fill?: string;
+}) => {
+  return (
+    <text
+      y={cy - words.length * 10}
+      fill={fill || "#fff"}
+      fontSize={12}
+      fontWeight={300}
+      letterSpacing={2}
+    >
+      {words.map((word, index) => (
+        <Word key={word} word={word} index={index} cx={cx} />
+      ))}
+    </text>
+  );
+};
+
+const Word = ({
+  word,
+  index,
+  cx,
+}: {
+  word: string;
+  index: number;
+  cx: number;
+}) => {
+  const id = useId();
+  return (
+    <tspan key={id} x={cx + 15} dy={index === 0 ? 0 : 12}>
+      {word}
+    </tspan>
   );
 };

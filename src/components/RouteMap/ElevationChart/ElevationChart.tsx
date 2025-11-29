@@ -19,6 +19,8 @@ import {
   computeMarkerPoints,
   computeMinMax,
   computeRoundedDomainAndTicks,
+  getMaxDistance,
+  getPoints,
 } from "./utils";
 
 interface ElevationChartProps {
@@ -27,27 +29,19 @@ interface ElevationChartProps {
 
 export const ElevationChart = ({ route }: ElevationChartProps) => {
   const theme = useTheme();
-  const points = useMemo(() => {
-    const raw =
-      (route.geoJson as any)?.properties?.elevationProfile?.points || [];
-    return [...raw].sort(
-      (a: any, b: any) => (a?.distance ?? 0) - (b?.distance ?? 0)
-    );
-  }, [route.geoJson]);
+  const points = useMemo(() => getPoints(route), [route]);
   const markers = useMemo(
     () => computeMarkerPoints(points, route.geoJson),
     [points, route.geoJson]
   );
-  const maxDistance = points.length ? points[points.length - 1].distance : 0;
-  const hasData = points.length > 1;
-
+  const maxDistance = getMaxDistance(points);
   const [min, max] = computeMinMax(points);
   const [minY, maxY, tickVals] = useMemo(
     () => computeRoundedDomainAndTicks([min, max]),
     [min, max]
   );
 
-  if (!hasData) {
+  if (!points.length) {
     return null;
   }
 
@@ -83,8 +77,8 @@ export const ElevationChart = ({ route }: ElevationChartProps) => {
         <YAxis
           dataKey="elevation"
           tick={<ElevationTick />}
-          domain={[minY, maxY] as any}
-          ticks={tickVals as any}
+          domain={[minY, maxY]}
+          ticks={tickVals}
           stroke="rgba(226, 232, 240, 0.7)"
           width={60}
         />
@@ -109,21 +103,28 @@ export const ElevationChart = ({ route }: ElevationChartProps) => {
           isAnimationActive={false}
         />
         {markers.length > 0 &&
-          markers.map((m, idx) => (
-            <ReferenceDot
-              key={`${m.distance}-${idx}`}
-              x={m.distance}
-              y={m.elevation}
-              r={7}
-              shape={(props) => (
-                <MarkerShape
-                  {...props}
-                  name={m.name}
-                  fill={theme.colors.accent}
-                />
-              )}
-            />
-          ))}
+          markers.map((m, idx) => {
+            const next = markers[idx + 1];
+            const nextDistance =
+              next && Math.abs((next.distance ?? 0) - (m.distance ?? 0));
+
+            const tooClose = nextDistance < 1000;
+            return (
+              <ReferenceDot
+                key={`${m.distance}-${idx}`}
+                x={m.distance}
+                y={m.elevation}
+                r={7}
+                shape={(props) => (
+                  <MarkerShape
+                    {...props}
+                    name={tooClose ? undefined : m.name}
+                    fill={theme.colors.accent}
+                  />
+                )}
+              />
+            );
+          })}
       </ComposedChart>
     </ResponsiveContainer>
   );
