@@ -8,10 +8,6 @@ const mergeTheme = (override?: PartialTheme): Theme => ({
     ...defaultTheme.colors,
     ...(override?.colors ?? {}),
   },
-  shadows: {
-    ...defaultTheme.shadows,
-    ...(override?.shadows ?? {}),
-  },
 });
 
 export const ThemeProvider = ({

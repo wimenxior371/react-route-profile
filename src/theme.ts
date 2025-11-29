@@ -1,6 +1,5 @@
 export interface Theme {
   colors: ThemeColors
-  shadows: ThemeShadows
 }
 
 export interface ThemeColors {
@@ -21,12 +20,8 @@ export const theme: Theme = {
     accent: "rgba(132, 204, 22, 1)",
     surface: "rgba(248, 250, 252, 1)",
   },
-  shadows: {
-    map: "0 10px 30px rgba(15, 23, 42, 0.16)",
-  },
 };
 
 export interface PartialTheme {
   colors: Partial<ThemeColors>
-  shadows: Partial<ThemeShadows>
 }

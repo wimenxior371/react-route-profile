@@ -17,9 +17,6 @@ const themes: Record<string, PartialTheme> = {
       accent: "rgba(132, 204, 22, 1)",
       surface: "rgba(248, 250, 252, 1)",
     },
-    shadows: {
-      map: "0 10px 30px rgba(15, 23, 42, 0.16)",
-    },
   },
   sunset: {
     colors: {
@@ -28,9 +25,6 @@ const themes: Record<string, PartialTheme> = {
       accent: "rgba(249, 115, 22, 1)",
       surface: "rgba(255, 247, 237, 1)",
     },
-    shadows: {
-      map: "0 10px 30px rgba(120, 53, 15, 0.2)",
-    },
   },
   forest: {
     colors: {
@@ -38,9 +32,6 @@ const themes: Record<string, PartialTheme> = {
       primaryMuted: "rgba(52, 211, 153, 0.7)",
       accent: "rgba(74, 222, 128, 1)",
       surface: "rgba(240, 253, 244, 1)",
-    },
-    shadows: {
-      map: "0 10px 30px rgba(22, 101, 52, 0.16)",
     },
   },
 };

@@ -44,9 +44,6 @@ const myTheme: Theme = {
     accent: "rgba(132, 204, 22, 1)",
     surface: "rgba(248, 250, 252, 1)",
   },
-  shadows: {
-    map: "0 10px 30px rgba(15, 23, 42, 0.16)",
-  },
 };
 
 <RouteMap apiKey={apiKey} route={myRoute} theme={myTheme} />;
@@ -70,14 +67,14 @@ const { refHeader, refMapContainer, targetHeaderFraction, effectiveHeaderHeight,
 
 ### RouteMap props
 
-| Prop      | Type             | Description                                |
-| --------- | ---------------- | ------------------------------------------ |
-| apiKey    | string           | Required Google Maps JS API key.           |
-| route     | RouteConfig      | Route data (center, zooms, geoJson).       |
-| height    | number \| string | Map height (e.g., `520` or `"100vh"`).     |
-| className | string           | Optional wrapper class.                    |
-| style     | CSSProperties    | Inline style overrides.                    |
-| theme     | Theme            | Optional theme override (colors, shadows). |
+| Prop      | Type             | Description                            |
+| --------- | ---------------- | -------------------------------------- |
+| apiKey    | string           | Required Google Maps JS API key.       |
+| route     | RouteConfig      | Route data (center, zooms, geoJson).   |
+| height    | number \| string | Map height (e.g., `520` or `"100vh"`). |
+| className | string           | Optional wrapper class.                |
+| style     | CSSProperties    | Inline style overrides.                |
+| theme     | Theme            | Optional theme override (colors).      |
 
 ### RouteConfig
 
@@ -98,7 +95,6 @@ const { refHeader, refMapContainer, targetHeaderFraction, effectiveHeaderHeight,
 | colors.primaryMuted | string | Softer variant of the primary.     |
 | colors.accent       | string | Secondary/accent color for labels. |
 | colors.surface      | string | Background for loader/surfaces.    |
-| shadows.map         | string | Shadow applied to the map wrapper. |
 
 ### useMapHeader
 

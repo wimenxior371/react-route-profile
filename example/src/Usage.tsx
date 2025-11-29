@@ -119,9 +119,6 @@ const myTheme: Theme = {
     accent: "rgba(132, 204, 22, 1)",
     surface: "rgba(248, 250, 252, 1)",
   },
-  shadows: {
-    map: "0 10px 30px rgba(15, 23, 42, 0.16)",
-  },
 };
 
 <RouteMap apiKey={apiKey} route={myRoute} height="80vh" theme={myTheme} />`}
@@ -187,9 +184,7 @@ const myTheme: Theme = {
           <tr>
             <td>theme?</td>
             <td>Theme</td>
-            <td>
-              Optional theme override (colors, shadows) used by map and loader.
-            </td>
+            <td>Optional theme override (colors) used by map and loader.</td>
           </tr>
         </tbody>
       </table>
@@ -266,11 +261,6 @@ const myTheme: Theme = {
             <td>colors?.surface?</td>
             <td>string</td>
             <td>Background color for Loader/surfaces.</td>
-          </tr>
-          <tr>
-            <td>shadows?.map?</td>
-            <td>string</td>
-            <td>Shadow applied to the map container.</td>
           </tr>
         </tbody>
       </table>
