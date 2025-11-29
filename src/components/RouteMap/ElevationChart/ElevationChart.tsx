@@ -9,6 +9,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { markers } from "../../../constants";
 import { useTheme } from "../../../theme-provider";
 import type { RouteConfig } from "../../../types";
 import { DistanceTick } from "./DistanceTick";
@@ -22,6 +23,21 @@ import {
 interface ElevationChartProps {
   route: RouteConfig;
 }
+
+const MarkerShape = (props: any) => {
+  const { cx, cy } = props;
+  const size = 40;
+  if (cx === undefined || cy === undefined) return null;
+  return (
+    <image
+      x={cx - size / 2}
+      y={cy - size / 2 - 25}
+      width={size}
+      height={size}
+      href={markers.default}
+    />
+  );
+};
 
 export const ElevationChart = ({ route }: ElevationChartProps) => {
   const theme = useTheme();
@@ -116,9 +132,7 @@ export const ElevationChart = ({ route }: ElevationChartProps) => {
               x={m.distance}
               y={m.elevation}
               r={7}
-              fill={theme.colors.accent}
-              stroke={"black"}
-              strokeWidth={4}
+              shape={<MarkerShape />}
             />
           ))}
       </ComposedChart>
