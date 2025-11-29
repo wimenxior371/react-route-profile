@@ -11,9 +11,10 @@ export const computeRoundedDomainAndTicks = (
   minMax: [number, number]
 ) => {
   const [min, max] = minMax;
-  const step = Math.max(10, Math.round((max - min) / 6 / 10) * 10 || 50);
-  const graphMin = Math.floor(min / step) * step;
-  const graphMax = Math.ceil(max / step) * step;
+  const paddedRange = (max - min) * 1.2;
+  const step = Math.max(10, Math.round(paddedRange / 6 / 10) * 10 || 50);
+  const graphMin = Math.floor((min - (paddedRange - (max - min)) / 2) / step) * step;
+  const graphMax = Math.ceil((max + (paddedRange - (max - min)) / 2) / step) * step;
   const ticks: number[] = [];
   for (let v = graphMin; v <= graphMax + step / 2; v += step) {
     ticks.push(v);

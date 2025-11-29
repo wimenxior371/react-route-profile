@@ -25,17 +25,20 @@ interface ElevationChartProps {
 }
 
 const MarkerShape = (props: any) => {
-  const { cx, cy } = props;
-  const size = 40;
+  const { cx, cy, fill } = props;
+  const size = 33;
   if (cx === undefined || cy === undefined) return null;
   return (
-    <image
-      x={cx - size / 2}
-      y={cy - size / 2 - 25}
-      width={size}
-      height={size}
-      href={markers.default}
-    />
+    <g>
+      <circle cx={cx} cy={cy} r={3} fill={fill} opacity={1} />
+      <image
+        x={cx - size / 2}
+        y={cy - size / 2 - 20}
+        width={size}
+        height={size}
+        href={markers.default}
+      />
+    </g>
   );
 };
 
@@ -119,9 +122,9 @@ export const ElevationChart = ({ route }: ElevationChartProps) => {
           type="monotone"
           dataKey="elevation"
           stroke={theme.colors.primary}
-          strokeWidth={2}
+          strokeWidth={1}
           dot={false}
-          activeDot={{ r: 4, fill: theme.colors.accent }}
+          activeDot={{ r: 3, fill: theme.colors.accent, strokeWidth: 0 }}
           fill="url(#elevationGradient)"
           isAnimationActive={false}
         />
@@ -132,7 +135,9 @@ export const ElevationChart = ({ route }: ElevationChartProps) => {
               x={m.distance}
               y={m.elevation}
               r={7}
-              shape={<MarkerShape />}
+              shape={(props) => (
+                <MarkerShape {...props} fill={theme.colors.accent} />
+              )}
             />
           ))}
       </ComposedChart>
