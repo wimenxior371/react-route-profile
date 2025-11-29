@@ -9,11 +9,11 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { markers } from "../../../constants";
 import { useTheme } from "../../../theme-provider";
 import type { RouteConfig } from "../../../types";
 import { DistanceTick } from "./DistanceTick";
 import { ElevationTick } from "./ElevationTick";
+import { MarkerShape } from "./MarkerShape";
 import {
   computeMarkerPoints,
   computeMinMax,
@@ -23,46 +23,6 @@ import {
 interface ElevationChartProps {
   route: RouteConfig;
 }
-
-const MarkerShape = (props: any) => {
-  const { cx, cy, fill, name } = props;
-  const size = 33;
-  if (cx === undefined || cy === undefined) return null;
-  const words =
-    typeof name === "string"
-      ? name
-          .split(/\s+/)
-          .map((w) => w.trim())
-          .filter(Boolean)
-      : [];
-  return (
-    <g>
-      <circle cx={cx} cy={cy} r={3} fill={fill} opacity={0.9} />
-      <image
-        x={cx - size / 2}
-        y={cy - size / 2 - 20}
-        width={size}
-        height={size}
-        href={markers.default}
-      />
-      {name ? (
-        <text
-          y={cy - words.length * 10}
-          fill={fill || "#fff"}
-          fontSize={12}
-          fontWeight={300}
-          letterSpacing={2}
-        >
-          {words.map((word, idx) => (
-            <tspan key={`${word}-${idx}`} x={cx + 15} dy={idx === 0 ? 0 : 12}>
-              {word}
-            </tspan>
-          ))}
-        </text>
-      ) : null}
-    </g>
-  );
-};
 
 export const ElevationChart = ({ route }: ElevationChartProps) => {
   const theme = useTheme();
@@ -131,11 +91,8 @@ export const ElevationChart = ({ route }: ElevationChartProps) => {
           labelStyle={{ color: "#e2e8f0" }}
           cursor={{ stroke: "rgba(226,232,240,0.4)", strokeWidth: 1 }}
           formatter={(value: any, name, props) => {
-            // console.log({ value, name, props });
             if (name === "elevation") {
               const markerName = (props?.payload as any)?.name;
-
-              console.log({ markerName });
 
               return [
                 `${Math.round(value as number)} m${
