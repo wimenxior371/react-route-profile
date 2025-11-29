@@ -82,9 +82,9 @@ function App() {
                   style={{
                     background:
                       key === themeKey
-                        ? themes[key].colors.primary
-                        : themes[key].colors.primaryMuted,
-                    borderColor: themes[key].colors.primary,
+                        ? themes[key].colors?.primary
+                        : themes[key].colors?.primaryMuted,
+                    borderColor: themes[key].colors?.primary,
                   }}
                   onClick={() => setThemeKey(key as keyof typeof themes)}
                 >

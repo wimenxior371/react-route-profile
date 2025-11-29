@@ -1,7 +1,3 @@
-export interface Theme {
-  colors: ThemeColors
-}
-
 export interface ThemeColors {
   primary: string;
   primaryMuted: string;
@@ -13,6 +9,14 @@ export interface ThemeShadows {
   map: string;
 }
 
+export interface Theme {
+  colors: ThemeColors;
+}
+
+export interface PartialTheme {
+  colors?: Partial<ThemeColors>;
+}
+
 export const theme: Theme = {
   colors: {
     primary: "rgba(14, 165, 233, 1)",
@@ -21,7 +25,3 @@ export const theme: Theme = {
     surface: "rgba(248, 250, 252, 1)",
   },
 };
-
-export interface PartialTheme {
-  colors: Partial<ThemeColors>
-}

@@ -5,7 +5,9 @@ import { theme as defaultTheme, PartialTheme } from "../../theme";
 import { ThemeProvider } from "../../theme-provider";
 import type { RouteConfig } from "../../types";
 import Loader from "../Loader";
+import { ElevationChart } from "./ElevationChart";
 import { GoogleMapCanvas } from "./GoogleMapCanvas";
+import styles from "./RouteMap.module.css";
 
 export interface RouteMapProps {
   apiKey: string;
@@ -74,6 +76,11 @@ export const RouteMap = ({
             isHorizontal={isHorizontal}
           />
         </Wrapper>
+        <div className={styles.chartLayer}>
+          <div className={styles.chartBody}>
+            <ElevationChart route={route} />
+          </div>
+        </div>
       </div>
     </ThemeProvider>
   );

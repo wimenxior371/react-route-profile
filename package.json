@@ -24,10 +24,15 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "clean": "rm -rf dist",
-    "prepare": "npm run build"
+    "prepare": "bun run build",
+    "fetch-elevation": "bun run bin/fetch-elevation.js"
+  },
+  "bin": {
+    "fetch-elevation": "./bin/fetch-elevation.js"
   },
   "devDependencies": {
     "@types/google.maps": "^3.58.1",
+    "@types/node": "^24.10.1",
     "@types/react": "^18.3.0",
     "@types/react-dom": "^18.3.0",
     "@uidotdev/usehooks": "^2.3.1",
@@ -35,6 +40,7 @@
     "typescript": "^5.6.0"
   },
   "dependencies": {
-    "@googlemaps/react-wrapper": "^1.2.0"
+    "@googlemaps/react-wrapper": "^1.2.0",
+    "recharts": "^2.12.7"
   }
 }

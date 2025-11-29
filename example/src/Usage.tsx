@@ -126,6 +126,16 @@ const myTheme: Theme = {
       </pre>
 
       <div>
+        (Optional) Precompute elevation once instead of fetching in the browser:
+      </div>
+      <pre className={styles.codeBlock}>
+        <code>
+{`npx fetch-elevation --in path/to/route.geojson --out path/to/route.elevation.json --samples 128 --key $GOOGLE_MAPS_API_KEY  # ensure Elevation API is enabled for this key
+# if you omit --out, the input file will be overwritten with elevationProfile`}
+        </code>
+      </pre>
+
+      <div>
         (Optional) Use <code className={styles.inlineCode}>useMapHeader</code>{" "}
         to size the map under a sticky header.
       </div>

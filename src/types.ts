@@ -4,5 +4,5 @@ export interface RouteConfig {
   center: { lat: number; lng: number };
   zoomHorizontal?: number;
   zoomVertical?: number;
-  geoJson: object;
+  geoJson: object;    
 }

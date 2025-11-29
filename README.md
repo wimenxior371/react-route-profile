@@ -63,6 +63,13 @@ const { refHeader, refMapContainer, targetHeaderFraction, effectiveHeaderHeight,
 </div>;
 ```
 
+### Optional: precompute elevation offline
+
+```bash
+npx fetch-elevation --in path/to/route.geojson --out path/to/route.elevation.json --samples 128 --key $GOOGLE_MAPS_API_KEY  # Elevation API must be enabled for this key
+# omit --out to overwrite the input file with elevationProfile
+```
+
 ## API
 
 ### RouteMap props
