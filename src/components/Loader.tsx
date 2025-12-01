@@ -9,7 +9,7 @@ interface LoaderProps {
 
 const Loader = ({
   message = "Loading map...",
-  height = "100vh",
+  height = "100dvh",
 }: LoaderProps) => {
   const theme = useTheme();
 

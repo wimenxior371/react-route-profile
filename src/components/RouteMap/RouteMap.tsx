@@ -4,10 +4,10 @@ import { useOrientation } from "../../hooks/useOrientation";
 import { theme as defaultTheme, PartialTheme } from "../../theme";
 import { ThemeProvider } from "../../theme-provider";
 import type { RouteConfig } from "../../types";
-import { HoverProvider } from "./HoverContext";
 import Loader from "../Loader";
 import { ElevationChart } from "./ElevationChart";
 import { GoogleMapCanvas } from "./GoogleMapCanvas";
+import { HoverProvider } from "./HoverContext";
 import styles from "./RouteMap.module.css";
 
 export interface RouteMapProps {
@@ -46,7 +46,7 @@ const render = (status: Status, height?: number | string) => (
 export const RouteMap = ({
   apiKey,
   route,
-  height = "100vh",
+  height = "100dvh",
   className,
   style,
   theme = defaultTheme,

@@ -14,7 +14,7 @@ export const useMapHeader = () => {
   const viewportHeight = typeof window !== "undefined" ? window.innerHeight : HEADER_FALLBACK_PX / targetHeaderFraction;
   const fallbackHeaderHeightPx = viewportHeight * targetHeaderFraction || HEADER_FALLBACK_PX;
   const effectiveHeaderHeight = headerHeight || fallbackHeaderHeightPx;
-  const mapHeightStyle = `calc(100vh - ${effectiveHeaderHeight}px)`;
+  const mapHeightStyle = `calc(100dvh - ${effectiveHeaderHeight}px)`;
   const mapHeight = mapContainerHeight || mapHeightStyle;
 
   return {

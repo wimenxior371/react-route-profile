@@ -29,7 +29,7 @@ const myRoute: RouteConfig = {
   geoJson: myGeoJsonObject,
 };
 
-<RouteMap apiKey={apiKey} route={myRoute} height="100vh" />;
+<RouteMap apiKey={apiKey} route={myRoute} height="100dvh" />;
 ```
 
 ### Optional: custom theme
@@ -74,14 +74,14 @@ npx fetch-elevation --in path/to/route.geojson --out path/to/route.elevation.jso
 
 ### RouteMap props
 
-| Prop      | Type             | Description                            |
-| --------- | ---------------- | -------------------------------------- |
-| apiKey    | string           | Required Google Maps JS API key.       |
-| route     | RouteConfig      | Route data (center, zooms, geoJson).   |
-| height    | number \| string | Map height (e.g., `520` or `"100vh"`). |
-| className | string           | Optional wrapper class.                |
-| style     | CSSProperties    | Inline style overrides.                |
-| theme     | Theme            | Optional theme override (colors).      |
+| Prop      | Type             | Description                             |
+| --------- | ---------------- | --------------------------------------- |
+| apiKey    | string           | Required Google Maps JS API key.        |
+| route     | RouteConfig      | Route data (center, zooms, geoJson).    |
+| height    | number \| string | Map height (e.g., `520` or `"100dvh"`). |
+| className | string           | Optional wrapper class.                 |
+| style     | CSSProperties    | Inline style overrides.                 |
+| theme     | Theme            | Optional theme override (colors).       |
 
 ### RouteConfig
 

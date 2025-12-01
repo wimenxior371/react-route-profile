@@ -99,8 +99,8 @@ function App() {
         ref={refMapContainer}
         style={{
           flex: "0 0 auto",
-          height: `calc(100vh - ${effectiveHeaderHeight}px)`,
-          maxHeight: `calc(100vh - ${effectiveHeaderHeight}px)`,
+          height: `calc(100dvh - ${effectiveHeaderHeight}px)`,
+          maxHeight: `calc(100dvh - ${effectiveHeaderHeight}px)`,
           overflow: "hidden",
         }}
         className={styles.mapWrapper}

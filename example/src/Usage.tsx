@@ -59,7 +59,7 @@ export const Usage = () => (
           {`<RouteMap
   apiKey={apiKey}
   route={myRoute}
-  height="100vh"
+  height="100dvh"
 />`}
         </code>
       </pre>
@@ -130,7 +130,7 @@ const myTheme: Theme = {
       </div>
       <pre className={styles.codeBlock}>
         <code>
-{`npx fetch-elevation --in path/to/route.geojson --out path/to/route.elevation.json --samples 128 --key $GOOGLE_MAPS_API_KEY  # ensure Elevation API is enabled for this key
+          {`npx fetch-elevation --in path/to/route.geojson --out path/to/route.elevation.json --samples 128 --key $GOOGLE_MAPS_API_KEY  # ensure Elevation API is enabled for this key
 # if you omit --out, the input file will be overwritten with elevationProfile`}
         </code>
       </pre>
@@ -179,7 +179,7 @@ const myTheme: Theme = {
           <tr>
             <td>height?</td>
             <td>number | string</td>
-            <td>Map height (e.g., 520 or "100vh").</td>
+            <td>Map height (e.g., 520 or "100dvh").</td>
           </tr>
           <tr>
             <td>className?</td>
