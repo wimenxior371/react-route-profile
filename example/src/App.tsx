@@ -66,25 +66,26 @@ function App() {
             Trailforks, Outdooractive, Komoot, or Bikemap.
           </h2>
           <div className={styles.actions}>
-            <h3 className={styles.scrollDown}>
-              <Link to="usage" smooth duration={1000}>
-                Scroll down for Usage
-              </Link>
-            </h3>
+            <Link to="usage" smooth duration={1000}>
+              Scroll down for Usage
+            </Link>
             <div className={styles.themeSwitcher}>
               {Object.keys(themes).map((key) => (
                 <button
                   type="button"
                   key={key}
-                  className={`${styles.themeButton} ${
-                    key === themeKey ? styles.themeButtonActive : ""
-                  }`}
+                  className={styles.themeButton}
                   style={{
                     background:
                       key === themeKey
                         ? themes[key].colors?.primary
-                        : themes[key].colors?.primaryMuted,
-                    borderColor: themes[key].colors?.primary,
+                        : "transparent",
+                    borderColor:
+                      themeKey === key
+                        ? themes[key].colors?.primary
+                        : "transparent",
+                    color:
+                      key === themeKey ? "black" : themes[key].colors?.primary,
                   }}
                   onClick={() => setThemeKey(key as keyof typeof themes)}
                 >
