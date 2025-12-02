@@ -28,7 +28,6 @@ export const Usage = () => (
 <RouteMap apiKey={apiKey} route={myRoute} />`}
         </code>
       </pre>
-
       <div>
         2. Route Configuration - Build a{" "}
         <code className={styles.inlineCode}>RouteConfig</code> with{" "}
@@ -49,9 +48,25 @@ export const Usage = () => (
 };`}
         </code>
       </pre>
+      <div>
+        3. Precompute elevation once for your route using the CLI tool :
+        <ul>
+          <li>Ensure Elevation API is enabled for this key</li>
+          <li>
+            If you omit --out, the input file will be overwritten with
+            elevationProfile
+          </li>
+          <li>Pass the output json to RouteConfig</li>
+        </ul>
+      </div>
+      <pre className={styles.codeBlock}>
+        <code>
+          {`npx fetch-elevation --in path/to/route.geojson --out path/to/route.elevation.json --samples 200 --key $GOOGLE_MAPS_API_KEY`}
+        </code>
+      </pre>
 
       <div>
-        3. Pass that <code className={styles.inlineCode}>RouteConfig</code> to{" "}
+        4. Pass that <code className={styles.inlineCode}>RouteConfig</code> to{" "}
         <code className={styles.inlineCode}>{`<RouteMap route=... />`}</code>.
       </div>
       <pre className={styles.codeBlock}>
@@ -63,9 +78,8 @@ export const Usage = () => (
 />`}
         </code>
       </pre>
-
       <div>
-        4. The <code className={styles.inlineCode}>geoJson</code> should be a
+        5. The <code className={styles.inlineCode}>geoJson</code> should be a
         FeatureCollection that includes your route geometry and optional point
         features ( first / last markers, etc.).
         <br />
@@ -86,7 +100,6 @@ export const Usage = () => (
 };`}
         </code>
       </pre>
-
       <div>
         (Optional) Adjust <code className={styles.inlineCode}>height</code>,{" "}
         <code className={styles.inlineCode}>className</code>, or{" "}
@@ -103,11 +116,9 @@ export const Usage = () => (
 />`}
         </code>
       </pre>
-
       <div>
         (Optional) Provide your own theme overrides (colors, marker, dots,
-        layout under <code className={styles.inlineCode}>routeMap</code> for
-        map/chart/tooltip/markerShape).
+        chart, map, tooltip, markerShape).
       </div>
       <pre className={styles.codeBlock}>
         <code>
@@ -122,28 +133,15 @@ const myTheme: Theme = {
   },
   marker: { outer: "#84CC16", inner: "#F8FAFC" },
   dots: { mapActive: "#84CC16" },
-  routeMap: {
-    map: { markerSize: 44, strokeWeight: 8 },
-    chart: { lineStrokeWidth: 2, yAxisWidth: 72 },
-    tooltip: { background: "rgba(15,23,42,0.95)" },
-    markerShape: { size: 30, text: { fontSize: 11 } },
-  },
+  map: { markerSize: 44, strokeWeight: 8 },
+  chart: { lineStrokeWidth: 2, yAxisWidth: 72 },
+  tooltip: { background: "rgba(15,23,42,0.95)" },
+  markerShape: { size: 30, text: { fontSize: 11 } },
 };
 
 <RouteMap apiKey={apiKey} route={myRoute} height="80vh" theme={myTheme} />`}
         </code>
       </pre>
-
-      <div>
-        (Optional) Precompute elevation once instead of fetching in the browser:
-      </div>
-      <pre className={styles.codeBlock}>
-        <code>
-          {`npx fetch-elevation --in path/to/route.geojson --out path/to/route.elevation.json --samples 128 --key $GOOGLE_MAPS_API_KEY  # ensure Elevation API is enabled for this key
-# if you omit --out, the input file will be overwritten with elevationProfile`}
-        </code>
-      </pre>
-
       <div>
         (Optional) Use <code className={styles.inlineCode}>useMapHeader</code>{" "}
         to size the map under a sticky header.

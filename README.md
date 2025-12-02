@@ -32,7 +32,18 @@ const myRoute: RouteConfig = {
 <RouteMap apiKey={apiKey} route={myRoute} height="100dvh" />;
 ```
 
-### Optional: custom theme
+### Precompute elevation offline
+
+```bash
+npx fetch-elevation --in path/to/route.geojson --out path/to/route.elevation.json --samples 200 --key $GOOGLE_MAPS_API_KEY
+# - Elevation API must be enabled for this key
+# - Omit --out to overwrite the input file with elevationProfile
+# - Pass the output json to RouteConfig
+```
+
+## Customization
+
+### Custom theme
 
 ```tsx
 import type { Theme } from "react-route-profile";
@@ -49,7 +60,7 @@ const myTheme: Theme = {
 <RouteMap apiKey={apiKey} route={myRoute} theme={myTheme} />;
 ```
 
-### Optional: sticky header sizing
+### Sticky header sizing
 
 ```tsx
 import { useMapHeader } from "react-route-profile";
@@ -61,13 +72,6 @@ const { refHeader, refMapContainer, targetHeaderFraction, effectiveHeaderHeight,
 <div ref={refMapContainer}>
   <RouteMap apiKey={apiKey} route={myRoute} height={mapHeight} />
 </div>;
-```
-
-### Optional: precompute elevation offline
-
-```bash
-npx fetch-elevation --in path/to/route.geojson --out path/to/route.elevation.json --samples 128 --key $GOOGLE_MAPS_API_KEY  # Elevation API must be enabled for this key
-# omit --out to overwrite the input file with elevationProfile
 ```
 
 ## API
