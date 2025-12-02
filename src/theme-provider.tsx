@@ -16,6 +16,26 @@ const mergeTheme = (override?: PartialTheme): Theme => ({
     ...defaultTheme.dots,
     ...(override?.dots ?? {}),
   },
+  map: {
+    ...defaultTheme.map,
+    ...(override?.map ?? {}),
+  },
+  chart: {
+    ...defaultTheme.chart,
+    ...(override?.chart ?? {}),
+  },
+  tooltip: {
+    ...defaultTheme.tooltip,
+    ...(override?.tooltip ?? {}),
+  },
+  markerShape: {
+    ...defaultTheme.markerShape,
+    ...(override?.markerShape ?? {}),
+    text: {
+      ...defaultTheme.markerShape.text,
+      ...(override?.markerShape?.text ?? {}),
+    },
+  },
 });
 
 export const ThemeProvider = ({

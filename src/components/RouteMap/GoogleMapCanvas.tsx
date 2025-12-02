@@ -65,14 +65,17 @@ export const GoogleMapCanvas = ({
 
       return {
         strokeColor: theme.colors.primaryMuted,
-        strokeWeight: 10,
+        strokeWeight: theme.map.strokeWeight,
         icon: {
           url: isFirst
             ? markerIcons.start
             : isLast
             ? markerIcons.finish
             : markerIcons.default,
-          scaledSize: new window.google.maps.Size(50, 50),
+          scaledSize: new window.google.maps.Size(
+            theme.map.markerSize,
+            theme.map.markerSize
+          ),
           optimized: false,
           zIndex: isFirst || isLast ? 100 : 10,
           collisionBehavior:
@@ -80,8 +83,8 @@ export const GoogleMapCanvas = ({
         },
         label: {
           className: styles.markerLabel,
-          fontSize: "20px",
-          fontWeight: "bold",
+          fontSize: `${theme.map.markerLabelFontSize}px`,
+          fontWeight: theme.map.markerLabelFontWeight,
           color: theme.colors.accent,
           text: name,
         },
@@ -131,7 +134,7 @@ export const GoogleMapCanvas = ({
     }
     const icon = {
       path: window.google.maps.SymbolPath.CIRCLE,
-      scale: 6,
+      scale: theme.map.hoverMarkerScale,
       fillColor: theme.dots.mapActive,
       fillOpacity: 1,
       strokeWeight: 0,

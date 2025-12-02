@@ -5,7 +5,13 @@ const Dot = (props: any) => {
   const theme = useTheme();
   if (cx === undefined || cy === undefined) return null;
   return (
-    <circle cx={cx} cy={cy} r={3} fill={theme.dots.chartActive} opacity={0.9} />
+    <circle
+      cx={cx}
+      cy={cy}
+      r={theme.chart.dotRadius}
+      fill={fill}
+      opacity={theme.chart.dotOpacity}
+    />
   );
 };
 

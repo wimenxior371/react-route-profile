@@ -1,17 +1,23 @@
+import { useTheme } from "../../../theme-provider";
+
 export const DistanceTick = (props: any) => {
   const { x, y, payload } = props;
+  const theme = useTheme();
   const km = Math.round((payload?.value ?? 0) / 1000);
   return (
     <text
       x={x}
       y={y}
-      fill="rgba(226, 232, 240, 0.7)"
-      fontSize={12}
+      fill={theme.chart.axisStroke}
+      fontSize={theme.chart.xTickFontSize}
       textAnchor="middle"
-      dy={12}
+      dy={theme.chart.xTickDy}
     >
       <tspan>{km}</tspan>
-      <tspan fontSize={10} dx={2}>
+      <tspan
+        fontSize={theme.chart.xTickUnitFontSize}
+        dx={theme.chart.xTickUnitDx}
+      >
         km
       </tspan>
     </text>

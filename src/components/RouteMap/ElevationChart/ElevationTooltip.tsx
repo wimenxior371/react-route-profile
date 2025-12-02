@@ -1,4 +1,5 @@
 import type { TooltipProps } from "recharts";
+import { useTheme } from "../../../theme-provider";
 
 interface ElevationTooltipProps extends TooltipProps<number, string> {
   accent: string;
@@ -16,6 +17,8 @@ export const ElevationTooltip = ({
   primary,
   markers,
 }: ElevationTooltipProps) => {
+  const { tooltip } = useTheme();
+
   if (!active || !payload?.length) return null;
 
   const point = payload[0]?.payload;
@@ -31,11 +34,11 @@ export const ElevationTooltip = ({
   return (
     <div
       style={{
-        background: "rgba(15,23,42,0.9)",
+        background: tooltip.background,
         border: "none",
-        color: "#e2e8f0",
-        padding: "6px 8px",
-        borderRadius: 6,
+        color: tooltip.textColor,
+        padding: tooltip.padding,
+        borderRadius: tooltip.borderRadius,
       }}
     >
       <div style={{ fontWeight: 600, color: primary }}>

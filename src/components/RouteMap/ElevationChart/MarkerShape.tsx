@@ -6,7 +6,8 @@ import { MapDot } from "./ElevationDot";
 export const MarkerShape = (props: any) => {
   const { cx, cy, fill, name } = props;
   const theme = useTheme();
-  const size = 33;
+  const layout = theme.markerShape;
+  const size = layout.size;
 
   const iconHref = useMemo(
     () => buildMarkerIcon(theme.marker.outer, theme.marker.inner),
@@ -27,7 +28,7 @@ export const MarkerShape = (props: any) => {
       <MapDot cx={cx} cy={cy} />
       <image
         x={cx - size / 2}
-        y={cy - size / 2 - 20}
+        y={cy - size / 2 - layout.lift}
         width={size}
         height={size}
         href={iconHref}
@@ -48,13 +49,16 @@ const Text = ({
   cy: number;
   fill?: string;
 }) => {
+  const theme = useTheme();
+  const text = theme.markerShape.text;
+
   return (
     <text
-      y={cy - words.length * 10}
+      y={cy - words.length * text.startLiftPerWord}
       fill={fill || "#fff"}
-      fontSize={12}
-      fontWeight={300}
-      letterSpacing={2}
+      fontSize={text.fontSize}
+      fontWeight={text.fontWeight}
+      letterSpacing={text.letterSpacing}
     >
       {words.map((word, index) => (
         <Word key={word} word={word} index={index} cx={cx} />
@@ -72,9 +76,15 @@ const Word = ({
   index: number;
   cx: number;
 }) => {
+  const theme = useTheme();
+  const text = theme.markerShape.text;
   const id = useId();
   return (
-    <tspan key={id} x={cx + 15} dy={index === 0 ? 0 : 12}>
+    <tspan
+      key={id}
+      x={cx + text.xOffset}
+      dy={index === 0 ? 0 : text.lineHeight}
+    >
       {word}
     </tspan>
   );

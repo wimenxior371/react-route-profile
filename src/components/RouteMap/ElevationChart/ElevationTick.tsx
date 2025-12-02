@@ -1,17 +1,23 @@
+import { useTheme } from "../../../theme-provider";
+
 export const ElevationTick = (props: any) => {
   const { x, y, payload } = props;
+  const theme = useTheme();
   const m = Math.round(payload?.value ?? 0);
   return (
     <text
       x={x}
       y={y}
-      fill="rgba(226, 232, 240, 0.7)"
-      fontSize={12}
+      fill={theme.chart.axisStroke}
+      fontSize={theme.chart.yTickFontSize}
       textAnchor="end"
-      dy={4}
+      dy={theme.chart.yTickDy}
     >
       <tspan>{m}</tspan>
-      <tspan fontSize={10} dx={2}>
+      <tspan
+        fontSize={theme.chart.yTickUnitFontSize}
+        dx={theme.chart.yTickUnitDx}
+      >
         m
       </tspan>
     </text>

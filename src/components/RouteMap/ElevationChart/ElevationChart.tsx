@@ -74,7 +74,7 @@ export const ElevationChart = ({ route }: ElevationChartProps) => {
     <ResponsiveContainer width="100%" height="100%">
       <ComposedChart
         data={points}
-        margin={{ top: 4, right: 8, bottom: 4, left: 8 }}
+        margin={theme.chart.margin}
         onMouseMove={({ activePayload }) => {
           activeIndex && clearActiveIndex();
           const activePayloadItem = activePayload?.[0];
@@ -91,36 +91,42 @@ export const ElevationChart = ({ route }: ElevationChartProps) => {
             <stop
               offset="0%"
               stopColor={theme.colors.primary}
-              stopOpacity={0.6}
+              stopOpacity={theme.chart.gradientStartOpacity}
             />
             <stop
               offset="100%"
               stopColor={theme.colors.primaryMuted}
-              stopOpacity={0.1}
+              stopOpacity={theme.chart.gradientEndOpacity}
             />
           </linearGradient>
         </defs>
 
-        <CartesianGrid stroke="rgba(255,255,255,0.08)" strokeDasharray="3 3" />
+        <CartesianGrid
+          stroke={theme.chart.gridStroke}
+          strokeDasharray={theme.chart.gridDasharray}
+        />
         <XAxis
           dataKey="distance"
           type="number"
           domain={[0, maxDistance]}
           ticks={ticks}
           tick={<DistanceTick />}
-          stroke="rgba(226, 232, 240, 0.7)"
+          stroke={theme.chart.axisStroke}
         />
         <YAxis
           dataKey="elevation"
           tick={<ElevationTick />}
           domain={[minY, maxY]}
           ticks={tickVals}
-          stroke="rgba(226, 232, 240, 0.7)"
-          width={60}
+          stroke={theme.chart.axisStroke}
+          width={theme.chart.yAxisWidth}
         />
 
         <Tooltip
-          cursor={{ stroke: "rgba(226,232,240,0.4)", strokeWidth: 1 }}
+          cursor={{
+            stroke: theme.chart.cursorStroke,
+            strokeWidth: theme.chart.cursorStrokeWidth,
+          }}
           content={
             <ElevationTooltip
               accent={theme.colors.accent}
@@ -134,7 +140,7 @@ export const ElevationChart = ({ route }: ElevationChartProps) => {
           type="monotone"
           dataKey="elevation"
           stroke={theme.colors.primary}
-          strokeWidth={1}
+          strokeWidth={theme.chart.lineStrokeWidth}
           dot={(props) => {
             const { cx, cy, index } = props;
             const isActive = index === activeIndex;
@@ -144,7 +150,11 @@ export const ElevationChart = ({ route }: ElevationChartProps) => {
             }
             return <ElevationDot cx={cx} cy={cy} />;
           }}
-          activeDot={{ r: 3, fill: theme.dots.chartActive, strokeWidth: 0 }}
+          activeDot={{
+            r: theme.chart.activeDotRadius,
+            fill: theme.dots.chartActive,
+            strokeWidth: 0,
+          }}
           fill="url(#elevationGradient)"
           isAnimationActive={false}
         />
@@ -157,7 +167,7 @@ export const ElevationChart = ({ route }: ElevationChartProps) => {
                 key={`${m.distance}-${idx}`}
                 x={m.distance}
                 y={m.elevation}
-                r={7}
+                r={theme.chart.referenceDotRadius}
                 shape={(props) => (
                   <MarkerShape
                     {...props}
@@ -171,7 +181,10 @@ export const ElevationChart = ({ route }: ElevationChartProps) => {
 
         {/* Vertical line at active X (same as hover cursor) */}
         {activePoint && (
-          <ReferenceLine x={activePoint.distance} opacity={0.5} /> // strokeDasharray="3 3"
+          <ReferenceLine
+            x={activePoint.distance}
+            opacity={theme.chart.referenceLineOpacity}
+          />
         )}
       </ComposedChart>
     </ResponsiveContainer>
