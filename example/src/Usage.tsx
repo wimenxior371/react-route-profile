@@ -105,8 +105,9 @@ export const Usage = () => (
       </pre>
 
       <div>
-        (Optional) Provide your own theme colors (primary, primaryMuted, accent,
-        surface).
+        (Optional) Provide your own theme overrides (colors, marker, dots,
+        layout under <code className={styles.inlineCode}>routeMap</code> for
+        map/chart/tooltip/markerShape).
       </div>
       <pre className={styles.codeBlock}>
         <code>
@@ -118,6 +119,14 @@ const myTheme: Theme = {
     primaryMuted: "rgba(14, 165, 233, 0.7)",
     accent: "rgba(132, 204, 22, 1)",
     surface: "rgba(248, 250, 252, 1)",
+  },
+  marker: { outer: "#84CC16", inner: "#F8FAFC" },
+  dots: { mapActive: "#84CC16" },
+  routeMap: {
+    map: { markerSize: 44, strokeWeight: 8 },
+    chart: { lineStrokeWidth: 2, yAxisWidth: 72 },
+    tooltip: { background: "rgba(15,23,42,0.95)" },
+    markerShape: { size: 30, text: { fontSize: 11 } },
   },
 };
 
@@ -194,7 +203,10 @@ const myTheme: Theme = {
           <tr>
             <td>theme?</td>
             <td>Theme</td>
-            <td>Optional theme override (colors) used by map and loader.</td>
+            <td>
+              Optional theme override (colors, marker/dots, routeMap layout)
+              used by map, chart, and loader.
+            </td>
           </tr>
         </tbody>
       </table>
@@ -271,6 +283,36 @@ const myTheme: Theme = {
             <td>colors?.surface?</td>
             <td>string</td>
             <td>Background color for Loader/surfaces.</td>
+          </tr>
+          <tr>
+            <td>marker?</td>
+            <td>{`{ outer?: string; inner?: string; startInner?: string; finishInner?: string }`}</td>
+            <td>Marker palette.</td>
+          </tr>
+          <tr>
+            <td>dots?</td>
+            <td>{`{ mapActive?: string; chart?: string; chartActive?: string }`}</td>
+            <td>Hover/line dot colors.</td>
+          </tr>
+          <tr>
+            <td>map?</td>
+            <td>{`{ strokeWeight?, markerSize?, markerLabelFontSize?, markerLabelFontWeight?, hoverMarkerScale? }`}</td>
+            <td>Map line/marker sizing.</td>
+          </tr>
+          <tr>
+            <td>chart?</td>
+            <td>{`{ margin?, gridStroke?, axisStroke?, cursorStroke?, yAxisWidth?, lineStrokeWidth?, dotRadius?, activeDotRadius?, referenceDotRadius? ... }`}</td>
+            <td>Chart spacing and strokes.</td>
+          </tr>
+          <tr>
+            <td>tooltip?</td>
+            <td>{`{ background?, textColor?, padding?, borderRadius? }`}</td>
+            <td>Tooltip styling.</td>
+          </tr>
+          <tr>
+            <td>markerShape?</td>
+            <td>{`{ size?, lift?, text?: { fontSize?, fontWeight?, letterSpacing?, xOffset?, lineHeight?, startLiftPerWord? } }`}</td>
+            <td>Marker label placement and sizing.</td>
           </tr>
         </tbody>
       </table>

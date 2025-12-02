@@ -74,14 +74,14 @@ npx fetch-elevation --in path/to/route.geojson --out path/to/route.elevation.jso
 
 ### RouteMap props
 
-| Prop      | Type             | Description                             |
-| --------- | ---------------- | --------------------------------------- |
-| apiKey    | string           | Required Google Maps JS API key.        |
-| route     | RouteConfig      | Route data (center, zooms, geoJson).    |
-| height    | number \| string | Map height (e.g., `520` or `"100dvh"`). |
-| className | string           | Optional wrapper class.                 |
-| style     | CSSProperties    | Inline style overrides.                 |
-| theme     | Theme            | Optional theme override (colors).       |
+| Prop      | Type             | Description                                            |
+| --------- | ---------------- | ------------------------------------------------------ |
+| apiKey    | string           | Required Google Maps JS API key.                       |
+| route     | RouteConfig      | Route data (center, zooms, geoJson).                   |
+| height    | number \| string | Map height (e.g., `520` or `"100dvh"`).                |
+| className | string           | Optional wrapper class.                                |
+| style     | CSSProperties    | Inline style overrides.                                |
+| theme     | Theme            | Optional theme override (colors, marker/dots, layout). |
 
 ### RouteConfig
 
@@ -96,12 +96,18 @@ npx fetch-elevation --in path/to/route.geojson --out path/to/route.elevation.jso
 
 ### Theme
 
-| Field               | Type   | Description                        |
-| ------------------- | ------ | ---------------------------------- |
-| colors.primary      | string | Main accent color.                 |
-| colors.primaryMuted | string | Softer variant of the primary.     |
-| colors.accent       | string | Secondary/accent color for labels. |
-| colors.surface      | string | Background for loader/surfaces.    |
+| Field               | Type   | Description                             |
+| ------------------- | ------ | --------------------------------------- |
+| colors.primary      | string | Main accent color.                      |
+| colors.primaryMuted | string | Softer variant of the primary.          |
+| colors.accent       | string | Secondary/accent color for labels.      |
+| colors.surface      | string | Background for loader/surfaces.         |
+| marker              | object | Marker palette (outer/inner/start/end). |
+| dots                | object | Hover/line dot colors.                  |
+| map                 | object | Map stroke/marker sizing.               |
+| chart               | object | Chart spacing/strokes/ticks.            |
+| tooltip             | object | Tooltip background/text/padding.        |
+| markerShape         | object | Marker icon/label sizing/offsets.       |
 
 ### useMapHeader
 
