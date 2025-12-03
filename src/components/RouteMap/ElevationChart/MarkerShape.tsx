@@ -59,6 +59,7 @@ const Text = ({
       fontSize={text.fontSize}
       fontWeight={text.fontWeight}
       letterSpacing={text.letterSpacing}
+      style={{ userSelect: "none" }}
     >
       {words.map((word, index) => (
         <Word key={word} word={word} index={index} cx={cx} />
