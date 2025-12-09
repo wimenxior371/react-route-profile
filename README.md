@@ -35,7 +35,7 @@ const myRoute: RouteConfig = {
 ### Precompute elevation offline
 
 ```bash
-npx fetch-elevation --in path/to/route.geojson --out path/to/route.elevation.json --samples 200 --key $GOOGLE_MAPS_API_KEY
+bunx fetch-elevation --in path/to/route.geojson --out path/to/route.elevation.json --samples 200 --key $GOOGLE_MAPS_API_KEY
 # - Elevation API must be enabled for this key
 # - Omit --out to overwrite the input file with elevationProfile
 # - Pass the output json to RouteConfig

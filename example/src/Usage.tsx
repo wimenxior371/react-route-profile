@@ -61,7 +61,7 @@ export const Usage = () => (
       </div>
       <pre className={styles.codeBlock}>
         <code>
-          {`npx fetch-elevation --in path/to/route.geojson --out path/to/route.elevation.json --samples 200 --key $GOOGLE_MAPS_API_KEY`}
+          {`bunx fetch-elevation --in path/to/route.geojson --out path/to/route.elevation.json --samples 200 --key $GOOGLE_MAPS_API_KEY`}
         </code>
       </pre>
 
