@@ -1,6 +1,8 @@
 # react-route-profile
 
-React component that renders a Google Map route with an interactive elevation profile, plus optional sticky header helper and theming.
+React component that renders a Google Map route with an interactive elevation profile.
+
+![Route map with elevation profile](README_screen.png)
 
 ## Installation
 
