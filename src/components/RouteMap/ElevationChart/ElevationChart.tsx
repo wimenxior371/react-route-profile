@@ -2,6 +2,7 @@ import { useEffect, useMemo } from "react";
 import {
   CartesianGrid,
   ComposedChart,
+  Customized,
   Line,
   ReferenceDot,
   ReferenceLine,
@@ -18,6 +19,7 @@ import { ElevationDot } from "./ElevationDot";
 import { ElevationTick } from "./ElevationTick";
 import { ElevationTooltip } from "./ElevationTooltip";
 import { MarkerShape } from "./MarkerShape";
+import { SurfaceStrip } from "./SurfaceStrip";
 import { useTriggerByXValue } from "./useTriggerByXValue";
 import {
   computeMarkerPoints,
@@ -46,8 +48,8 @@ export const ElevationChart = ({ route }: ElevationChartProps) => {
   const ticks = getTicksForDistance(maxDistance);
   const [min, max] = computeMinMax(points);
   const [minY, maxY, tickVals] = useMemo(
-    () => computeRoundedDomainAndTicks([min, max]),
-    [min, max]
+    () => computeRoundedDomainAndTicks([min, max], !!route.surface?.length),
+    [min, max, route.surface?.length]
   );
 
   const { activeIndex, activePoint, triggerByXValue, clearActiveIndex } =
@@ -109,6 +111,9 @@ export const ElevationChart = ({ route }: ElevationChartProps) => {
           stroke={theme.chart.gridStroke}
           strokeDasharray={theme.chart.gridDasharray}
         />
+        <Customized
+          component={<SurfaceStrip route={route} maxDistance={maxDistance} />}
+        />
         <XAxis
           dataKey="distance"
           type="number"
@@ -136,6 +141,7 @@ export const ElevationChart = ({ route }: ElevationChartProps) => {
               accent={theme.colors.accent}
               primary={theme.colors.primary}
               markers={markers}
+              surfaces={route.surface}
             />
           }
         />

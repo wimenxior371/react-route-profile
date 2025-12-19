@@ -46,14 +46,20 @@ export const computeMinMax = (points: Array<{ elevation: number }>) => {
   return [Math.floor(min - pad), Math.ceil(max + pad)];
 };
 
-export const computeRoundedDomainAndTicks = (minMax: [number, number]) => {
+export const computeRoundedDomainAndTicks = (
+  minMax: [number, number],
+  shouldOffset: boolean = false
+) => {
   const [min, max] = minMax;
   const paddedRange = (max - min) * 1.2;
   const step = Math.max(10, Math.round(paddedRange / 6 / 10) * 10 || 50);
+  const offset = shouldOffset ? -20 : 0;
   const graphMin =
-    Math.floor((min - (paddedRange - (max - min)) / 2) / step) * step;
+    Math.floor((min - (paddedRange - (max - min)) / 2) / step) * step +
+    offset;
   const graphMax =
-    Math.ceil((max + (paddedRange - (max - min)) / 2) / step) * step;
+    Math.ceil((max + (paddedRange - (max - min)) / 2) / step) * step +
+    offset;
   const ticks: number[] = [];
   for (let v = graphMin; v <= graphMax + step / 2; v += step) {
     ticks.push(v);
