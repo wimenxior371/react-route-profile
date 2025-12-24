@@ -7,7 +7,7 @@ import type { RouteConfig } from "../../../types";
 import { SurfaceType } from "../../../types";
 
 const SURFACE_STRIP_WIDTH = 30;
-export const SURFACE_STRIP_HEIGHT = 22;
+export const SURFACE_STRIP_HEIGHT = 16;
 
 export const SURFACE_TEXTURES: Record<
   SurfaceType,
@@ -15,19 +15,26 @@ export const SURFACE_TEXTURES: Record<
 > = {
   [SurfaceType.Asphalt]: {
     file: surfaceAsphalt,
+    width: 30,
+    height: 22,
   },
   [SurfaceType.Compacted]: {
     file: surfaceCompacted,
-    width: 300,
+    width: 200,
+    height: 16,
   },
   [SurfaceType.Concrete]: {
     file: surfaceConcrete,
   },
   [SurfaceType.Natural]: {
     file: surfaceNatural,
+    width: 30,
+    height: 22,
   },
   [SurfaceType.Penetrated]: {
     file: surfacePenetrated,
+    width: 30,
+    height: 22,
   },
 };
 

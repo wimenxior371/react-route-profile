@@ -29,6 +29,8 @@ const myRoute: RouteConfig = {
   zoomHorizontal: 14,
   zoomVertical: 12,
   geoJson: myGeoJsonObject,
+  surface: [{ segment: [0, 1000], type: "asphalt" }],
+  routes: [{ id: "A12", color: "green", segment: [0, 1000] }],
 };
 
 <RouteMap apiKey={apiKey} route={myRoute} height="100dvh" />;
@@ -91,14 +93,16 @@ const { refHeader, refMapContainer, targetHeaderFraction, effectiveHeaderHeight,
 
 ### RouteConfig
 
-| Field          | Type                           | Description                    |
-| -------------- | ------------------------------ | ------------------------------ |
-| id             | string                         | Identifier for the route.      |
-| name           | string                         | Display name.                  |
-| center         | `{ lat: number; lng: number }` | Map center.                    |
-| zoomHorizontal | number (optional)              | Zoom when landscape.           |
-| zoomVertical   | number (optional)              | Zoom when portrait.            |
-| geoJson        | FeatureCollection              | GeoJSON geometry and features. |
+| Field          | Type                                                | Description                               |
+| -------------- | --------------------------------------------------- | ----------------------------------------- |
+| id             | string                                              | Identifier for the route.                 |
+| name           | string                                              | Display name.                             |
+| center         | `{ lat: number; lng: number }`                      | Map center.                               |
+| zoomHorizontal | number (optional)                                   | Zoom when landscape.                      |
+| zoomVertical   | number (optional)                                   | Zoom when portrait.                       |
+| geoJson        | FeatureCollection                                   | GeoJSON geometry and features.            |
+| surface        | `Array<{ segment: [number, number]; type: SurfaceType }>` | Optional surface segments for the strip. |
+| routes         | `Array<{ id: string; color: string; segment: [number, number] }>` | Optional route segments for the route strip. |
 
 ### Theme
 

@@ -92,8 +92,10 @@ export const ElevationTooltip = ({
         background: tooltip.background,
         border: "none",
         color: tooltip.textColor,
-        padding: tooltip.padding,
+        padding: "4px 6px",
         borderRadius: tooltip.borderRadius,
+        fontSize: 13,
+        lineHeight: 1.2,
       }}
     >
       <div style={{ fontWeight: 600, color: primary }}>
@@ -103,17 +105,10 @@ export const ElevationTooltip = ({
         Elevation: <strong>{Math.round(point?.elevation ?? 0)} m</strong>
       </div>
       {surface?.type ? (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
-            lineHeight: 2,
-          }}
-        >
+        <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
           <svg
-            width="30"
-            height="22"
+            width="20"
+            height="14"
             aria-hidden="true"
             style={{ display: "block" }}
           >
@@ -122,12 +117,12 @@ export const ElevationTooltip = ({
                 href={surfaceTexture.file}
                 x="0"
                 y="0"
-                width="30"
-                height="22"
+                width="20"
+                height="14"
                 preserveAspectRatio="xMidYMid slice"
               />
             ) : (
-              <rect width="30" height="22" fill={tooltip.textColor} />
+              <rect width="20" height="14" fill={tooltip.textColor} />
             )}
           </svg>
           <span>{formatSurfaceLabel(surface.type)}</span>
@@ -135,21 +130,14 @@ export const ElevationTooltip = ({
         </div>
       ) : null}
       {routeSegment ? (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
-            lineHeight: 2,
-          }}
-        >
+        <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
           <svg
-            width="30"
-            height="22"
+            width="20"
+            height="14"
             aria-hidden="true"
             style={{ display: "block" }}
           >
-            <rect width="30" height="22" fill={routeSegment.color} />
+            <rect width="20" height="14" fill={routeSegment.color} />
           </svg>
           <span>{routeSegment.id}</span>
           <span>{formatSegmentLabel(routeSegment.segment)}</span>

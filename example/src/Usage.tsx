@@ -33,7 +33,7 @@ export const Usage = () => (
         <code className={styles.inlineCode}>RouteConfig</code> with{" "}
         <code
           className={styles.inlineCode}
-        >{`{ id, name, center, zoomHorizontal?, zoomVertical?, geoJson }`}</code>
+        >{`{ id, name, center, zoomHorizontal?, zoomVertical?, geoJson, surface?, routes? }`}</code>
         .
       </div>
       <pre className={styles.codeBlock}>
@@ -45,6 +45,8 @@ export const Usage = () => (
   zoomHorizontal: 14,
   zoomVertical: 12,
   geoJson: myGeoJsonObject,
+  surface: [{ segment: [0, 1000], type: "asphalt" }],
+  routes: [{ id: "A12", color: "green", segment: [0, 1000] }],
 };`}
         </code>
       </pre>
@@ -248,6 +250,16 @@ const myTheme: Theme = {
             <td>geoJson</td>
             <td>FeatureCollection</td>
             <td>GeoJSON geometry and features.</td>
+          </tr>
+          <tr>
+            <td>surface?</td>
+            <td>{`Array<{ segment: [number, number]; type: SurfaceType }>`}</td>
+            <td>Optional surface segments for the strip.</td>
+          </tr>
+          <tr>
+            <td>routes?</td>
+            <td>{`Array<{ id: string; color: string; segment: [number, number] }>`}</td>
+            <td>Optional route segments for the route strip.</td>
           </tr>
         </tbody>
       </table>
