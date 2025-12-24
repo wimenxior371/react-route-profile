@@ -8,6 +8,7 @@ interface ElevationTooltipProps extends TooltipProps<number, string> {
   primary: string;
   markers: Array<{ distance: number; name?: string }>;
   surfaces?: RouteConfig["surface"];
+  routes?: RouteConfig["routes"];
 }
 
 const MARKER_DISTANCE_TOLERANCE_MATCH = 300; // meters
@@ -27,8 +28,35 @@ const getSurfaceForDistance = (
   );
 };
 
+const getRouteForDistance = (
+  routes: RouteConfig["routes"],
+  distance: number
+) => {
+  if (!routes?.length) return null;
+  return (
+    routes.find((route) => {
+      const [start, end] = route.segment;
+      const segStart = Math.min(start, end);
+      const segEnd = Math.max(start, end);
+      return distance >= segStart && distance <= segEnd;
+    }) ?? null
+  );
+};
+
 const formatSurfaceLabel = (surface: SurfaceType) =>
   surface.charAt(0).toUpperCase() + surface.slice(1);
+
+const formatSegmentLabel = (segment: [number, number]) => {
+  const [start, end] = segment;
+  const segStart = Math.min(start, end);
+  const segEnd = Math.max(start, end);
+  const formatKm = (value: number) => {
+    const km = value / 1000;
+    const rounded = km.toFixed(1);
+    return rounded.endsWith(".0") ? rounded.slice(0, -2) : rounded;
+  };
+  return `(${formatKm(segStart)} km - ${formatKm(segEnd)} km)`;
+};
 
 export const ElevationTooltip = ({
   active,
@@ -38,6 +66,7 @@ export const ElevationTooltip = ({
   primary,
   markers,
   surfaces,
+  routes,
 }: ElevationTooltipProps) => {
   const { tooltip } = useTheme();
 
@@ -52,6 +81,7 @@ export const ElevationTooltip = ({
   );
   const surface = getSurfaceForDistance(surfaces, distance);
   const surfaceTexture = surface?.type ? SURFACE_TEXTURES[surface.type] : null;
+  const routeSegment = getRouteForDistance(routes, distance);
 
   const km = Math.trunc((label as number) / 1000);
   const m = Math.round((label as number) % 1000);
@@ -100,7 +130,29 @@ export const ElevationTooltip = ({
               <rect width="30" height="22" fill={tooltip.textColor} />
             )}
           </svg>
-          <strong>{formatSurfaceLabel(surface.type)}</strong>
+          <span>{formatSurfaceLabel(surface.type)}</span>
+          <span>{formatSegmentLabel(surface.segment)}</span>
+        </div>
+      ) : null}
+      {routeSegment ? (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 6,
+            lineHeight: 2,
+          }}
+        >
+          <svg
+            width="30"
+            height="22"
+            aria-hidden="true"
+            style={{ display: "block" }}
+          >
+            <rect width="30" height="22" fill={routeSegment.color} />
+          </svg>
+          <span>{routeSegment.id}</span>
+          <span>{formatSegmentLabel(routeSegment.segment)}</span>
         </div>
       ) : null}
       {marker?.name ? (

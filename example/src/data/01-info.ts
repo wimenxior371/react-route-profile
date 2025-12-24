@@ -17,5 +17,22 @@ export const route01: RouteConfig = {
     { segment: [11000, 14100], type: SurfaceType.Asphalt },
     { segment: [14100, 17000], type: SurfaceType.Natural },
     { segment: [17000, 18800], type: SurfaceType.Asphalt },
+  ],
+  routes: [
+    {
+      id: "8854", color: "#ffed00", segment: [0, 900]
+    },
+    {
+      id: "2711", color: "#009fe2", segment: [900, 5100]
+    },
+    {
+      id: "5705", color: "#009640", segment: [5100, 12200]
+    },
+    {
+      id: "014", color: "#e30212", segment: [12200, 17900]
+    },
+    {
+      id: "2711", color: "#009fe2", segment: [17900, 18800]
+    }
   ]
 };

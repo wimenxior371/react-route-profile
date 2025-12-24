@@ -5,7 +5,8 @@ export interface RouteConfig {
   zoomHorizontal?: number;
   zoomVertical?: number;
   geoJson: object;
-  surface?: Array<{segment: [number, number], type: SurfaceType}>; 
+  surface?: Array<{segment: [number, number], type: SurfaceType}>;
+  routes?: Array<{id: string; color: string; segment: [number, number]}>;
 }
 
 export enum SurfaceType {

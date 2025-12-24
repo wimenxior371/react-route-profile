@@ -7,7 +7,7 @@ import type { RouteConfig } from "../../../types";
 import { SurfaceType } from "../../../types";
 
 const SURFACE_STRIP_WIDTH = 30;
-const SURFACE_STRIP_HEIGHT = 22;
+export const SURFACE_STRIP_HEIGHT = 22;
 
 export const SURFACE_TEXTURES: Record<
   SurfaceType,
@@ -54,6 +54,9 @@ export const SurfaceStrip = ({
   offset,
 }: SurfaceStripProps) => {
   const surfaces = route.surface ?? [];
+  if (!surfaces.length) {
+    return null;
+  }
 
   const xAxis = xAxisMap ? Object.values(xAxisMap)[0] : undefined;
   const scale = xAxis?.scale;

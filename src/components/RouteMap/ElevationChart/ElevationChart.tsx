@@ -19,7 +19,8 @@ import { ElevationDot } from "./ElevationDot";
 import { ElevationTick } from "./ElevationTick";
 import { ElevationTooltip } from "./ElevationTooltip";
 import { MarkerShape } from "./MarkerShape";
-import { SurfaceStrip } from "./SurfaceStrip";
+import { RouteStrip } from "./RouteStrip";
+import { SURFACE_STRIP_HEIGHT, SurfaceStrip } from "./SurfaceStrip";
 import { useTriggerByXValue } from "./useTriggerByXValue";
 import {
   computeMarkerPoints,
@@ -112,6 +113,15 @@ export const ElevationChart = ({ route }: ElevationChartProps) => {
           strokeDasharray={theme.chart.gridDasharray}
         />
         <Customized
+          component={
+            <RouteStrip
+              route={route}
+              maxDistance={maxDistance}
+              belowHeight={SURFACE_STRIP_HEIGHT}
+            />
+          }
+        />
+        <Customized
           component={<SurfaceStrip route={route} maxDistance={maxDistance} />}
         />
         <XAxis
@@ -142,6 +152,7 @@ export const ElevationChart = ({ route }: ElevationChartProps) => {
               primary={theme.colors.primary}
               markers={markers}
               surfaces={route.surface}
+              routes={route.routes}
             />
           }
         />
