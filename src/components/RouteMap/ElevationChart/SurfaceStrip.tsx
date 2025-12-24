@@ -98,7 +98,13 @@ export const SurfaceStrip = ({
         )}
       </defs>
       <g>
-        <rect x={chartLeft} y={stripY} width={chartWidth} height={height} />
+        <rect
+          x={chartLeft}
+          y={stripY}
+          width={chartWidth}
+          height={height}
+          fill="none"
+        />
         {surfaces.map((surface, index) => {
           const [rawStart, rawEnd] = surface.segment;
           const clampedStart = Math.max(0, Math.min(rawStart, maxDistance));

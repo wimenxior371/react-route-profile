@@ -44,7 +44,13 @@ export const RouteStrip = ({
 
   return (
     <g>
-      <rect x={chartLeft} y={stripY} width={chartWidth} height={height} />
+      <rect
+        x={chartLeft}
+        y={stripY}
+        width={chartWidth}
+        height={height}
+        fill="none"
+      />
       {routes.map((routeSegment, index) => {
         const [rawStart, rawEnd] = routeSegment.segment;
         const clampedStart = Math.max(0, Math.min(rawStart, maxDistance));

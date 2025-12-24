@@ -91,22 +91,24 @@ const buildUrl = (apiKey, pathPoints, samples) => {
   return `https://maps.googleapis.com/maps/api/elevation/json?path=${encodedPath}&samples=${samples}&key=${apiKey}`;
 };
 
-const toElevationPoints = (results) => {
+const computePathDistance = (pathPoints) => {
+  let total = 0;
+  for (let i = 1; i < pathPoints.length; i += 1) {
+    total += haversineMeters(pathPoints[i - 1], pathPoints[i]);
+  }
+  return total;
+};
+
+const toElevationPoints = (results, totalDistance) => {
   const points = [];
-  let cumulative = 0;
   results.forEach((r, idx) => {
     if (!r?.location) return;
-    if (idx > 0) {
-      const prev = results[idx - 1];
-      cumulative += haversineMeters(
-        { lat: prev.location.lat, lng: prev.location.lng },
-        { lat: r.location.lat, lng: r.location.lng }
-      );
-    }
+    const ratio = (results.length - 1) > 0 ? idx / (results.length - 1) : 0;
+    const cumulative = Math.round(totalDistance * ratio);
     points.push({
       lat: r.location.lat,
       lng: r.location.lng,
-      distance: Math.round(cumulative),
+      distance: cumulative,
       elevation: r.elevation,
     });
   });
@@ -131,6 +133,7 @@ const main = async () => {
   const raw = await fs.readFile(inputPath, "utf8");
   const geoJson = JSON.parse(raw);
   const { path: rawPath, lineFeature } = extractPath(geoJson);
+  const computedDistance = computePathDistance(rawPath);
   const pathPoints = downsamplePath(rawPath);
   if (rawPath.length !== pathPoints.length) {
     console.log(`Downsampled path from ${rawPath.length} to ${pathPoints.length} points.`);
@@ -159,7 +162,7 @@ const main = async () => {
     throw new Error(`Elevation API error: ${json?.status || "Unknown error"}`);
   }
 
-  const points = toElevationPoints(json.results || []);
+  const points = toElevationPoints(json.results || [], computedDistance);
   lineFeature.properties = {
     ...(lineFeature.properties || {}),
     elevationProfile: {
@@ -180,6 +183,11 @@ const main = async () => {
 
   console.log(
     `Saved ${points.length} elevation points to ${path.resolve(outputPath)}`
+  );
+  console.log(
+    `Raw path distance ${Math.round(computedDistance)}m | Last sample distance ${Math.round(
+      totalDistance
+    )}m`
   );
   console.log(
     `Distance ~${Math.round(totalDistance / 1000)} km | Elevation range ${Math.round(
