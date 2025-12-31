@@ -49,71 +49,48 @@ function App() {
   const [themeKey, setThemeKey] = useState<keyof typeof themes>("default");
   const theme = useMemo(() => themes[themeKey], [themeKey]);
 
-  const {
-    targetHeaderFraction,
-    effectiveHeaderHeight,
-    mapHeight,
-    refHeader,
-    refMapContainer,
-  } = useMapHeader();
+  const { mapHeight, refHeader } = useMapHeader();
 
   return (
-    <div className={styles.container}>
-      <header
-        ref={refHeader}
-        style={{
-          position: "sticky",
-          top: 0,
-          height: `${targetHeaderFraction * 100}vh`,
-        }}
-        className={styles.header}
-      >
-        <div>
-          <h1 className={styles.title}>react-route-profile</h1>
-          <h2 className={styles.subtitle}>
-            A React component to alternate map + route profile, similar to
-            Trailforks, Outdooractive, Komoot, or Bikemap.
-          </h2>
-          <div className={styles.actions}>
-            <div className={styles.scrollDown}>
-              <Link to="usage" smooth duration={1000}>
-                Scroll down for Usage
-              </Link>
-            </div>
+    <>
+      <div className={styles.container}>
+        <header ref={refHeader} className={styles.header}>
+          <div>
+            <h1 className={styles.title}>react-route-profile</h1>
+            <h2 className={styles.subtitle}>
+              A React component to alternate map + route profile, similar to
+              Trailforks, Outdooractive, Komoot, or Bikemap.
+            </h2>
+            <div className={styles.actions}>
+              <div className={styles.scrollDown}>
+                <Link to="usage" smooth duration={1000}>
+                  Scroll down for Usage
+                </Link>
+              </div>
 
-            <div className={styles.themeSwitcher}>
-              <label className={styles.themeLabel} htmlFor="theme-select">
-                Theme
-              </label>
-              <select
-                id="theme-select"
-                className={styles.themeSelect}
-                value={themeKey}
-                onChange={(e) =>
-                  setThemeKey(e.target.value as keyof typeof themes)
-                }
-              >
-                {Object.keys(themes).map((key) => (
-                  <option key={key} value={key}>
-                    {key}
-                  </option>
-                ))}
-              </select>
+              <div className={styles.themeSwitcher}>
+                <label className={styles.themeLabel} htmlFor="theme-select">
+                  Theme
+                </label>
+                <select
+                  id="theme-select"
+                  className={styles.themeSelect}
+                  value={themeKey}
+                  onChange={(e) =>
+                    setThemeKey(e.target.value as keyof typeof themes)
+                  }
+                >
+                  {Object.keys(themes).map((key) => (
+                    <option key={key} value={key}>
+                      {key}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
-        </div>
-      </header>
+        </header>
 
-      <div
-        ref={refMapContainer}
-        style={{
-          flex: "0 0 auto",
-          height: `calc(100dvh - ${effectiveHeaderHeight}px)`,
-          maxHeight: `calc(100dvh - ${effectiveHeaderHeight}px)`,
-          overflow: "hidden",
-        }}
-        className={styles.mapWrapper}
-      >
         <RouteMap
           apiKey={apiKey}
           route={route01}
@@ -125,7 +102,7 @@ function App() {
       <Element name="usage">
         <Usage />
       </Element>
-    </div>
+    </>
   );
 }
 

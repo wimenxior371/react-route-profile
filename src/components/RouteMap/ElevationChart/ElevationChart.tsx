@@ -162,14 +162,14 @@ export const ElevationChart = ({ route }: ElevationChartProps) => {
           dataKey="elevation"
           stroke={theme.colors.primary}
           strokeWidth={theme.chart.lineStrokeWidth}
+          // @ts-ignore
           dot={(props) => {
             const { cx, cy, index } = props;
             const isActive = index === activeIndex;
-            if (!isActive || !activePoint) {
-              // no dot for inactive points (or use small one if you prefer)
-              return <></>;
+
+            if (isActive && activePoint) {
+              return <ElevationDot cx={cx} cy={cy} key={`dot-${cx}-${cy}`} />;
             }
-            return <ElevationDot cx={cx} cy={cy} />;
           }}
           activeDot={{
             r: theme.chart.activeDotRadius,

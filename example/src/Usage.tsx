@@ -150,12 +150,15 @@ const myTheme: Theme = {
       </div>
       <pre className={styles.codeBlock}>
         <code>
-          {`const { refHeader, refMapContainer, targetHeaderFraction, effectiveHeaderHeight, mapHeight } = useMapHeader();
+          {`const {
+  refHeader,
+  mapHeight,
+} = useMapHeader();
 
-<header ref={refHeader} style={{ height: \`\${targetHeaderFraction * 100}vh\` }}>
+<header ref={refHeader}>
   Header
 </header>
-<div ref={refMapContainer}>
+<div style={{ height: mapHeight }}>
   <RouteMap apiKey={apiKey} route={myRoute} height={mapHeight} />
 </div>`}
         </code>
@@ -343,19 +346,14 @@ const myTheme: Theme = {
             <td>Attach to the sticky header element.</td>
           </tr>
           <tr>
-            <td>refMapContainer</td>
-            <td>Ref&lt;HTMLDivElement&gt;</td>
-            <td>Attach to the map container.</td>
+            <td>headerHeight</td>
+            <td>number</td>
+            <td>Measured header height (px), 0 until ready.</td>
           </tr>
           <tr>
-            <td>targetHeaderFraction</td>
-            <td>number</td>
-            <td>Header height fraction (0.25 mobile, 0.15 desktop).</td>
-          </tr>
-          <tr>
-            <td>effectiveHeaderHeight</td>
-            <td>number</td>
-            <td>Measured or fallback header height (px).</td>
+            <td>isHeaderReady</td>
+            <td>boolean</td>
+            <td>True once the header has been measured.</td>
           </tr>
           <tr>
             <td>mapHeight</td>

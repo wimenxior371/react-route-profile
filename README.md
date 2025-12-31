@@ -69,11 +69,13 @@ const myTheme: Theme = {
 ```tsx
 import { useMapHeader } from "react-route-profile";
 
-const { refHeader, refMapContainer, targetHeaderFraction, effectiveHeaderHeight, mapHeight } =
-  useMapHeader();
+const {
+  refHeader,
+  mapHeight,
+} = useMapHeader();
 
-<header ref={refHeader} style={{ height: `${targetHeaderFraction * 100}vh` }}>Header</header>
-<div ref={refMapContainer}>
+<header ref={refHeader}>Header</header>
+<div style={{ height: mapHeight }}>
   <RouteMap apiKey={apiKey} route={myRoute} height={mapHeight} />
 </div>;
 ```
@@ -124,9 +126,8 @@ const { refHeader, refMapContainer, targetHeaderFraction, effectiveHeaderHeight,
 Returns helpers to size the map below a sticky header:
 
 - `refHeader`: attach to your header element.
-- `refMapContainer`: attach to the map container.
-- `targetHeaderFraction`: target header height fraction (based on orientation).
-- `effectiveHeaderHeight`: measured or fallback header height (px).
+- `headerHeight`: measured header height (px), `0` until ready.
+- `isHeaderReady`: `true` once the header is measured.
 - `mapHeight`: string/number height you can pass to `RouteMap`.
 
 ## Notes
