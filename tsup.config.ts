@@ -13,8 +13,8 @@ export default defineConfig({
   splitting: false, // safer for dual ESM/CJS libraries
   external: ["react", "react-dom"],
   loader: {
-    ".css": "css",
-    ".module.css": "local-css",
+    ".css": "copy",
     ".svg": "text",
+    ".png": "dataurl",
   },
 });
