@@ -1,6 +1,6 @@
 {
   "name": "react-route-profile",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "private": false,
   "type": "module",
   "packageManager": "bun@1.3.3",
@@ -11,6 +11,9 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
+    },
+    "./dist/index.css": {
+      "default": "./dist/index.css"
     }
   },
   "main": "./dist/index.cjs",
