@@ -20,7 +20,7 @@ const Loader = ({
   };
 
   return (
-    <div className={styles.loader} style={style}>
+    <div className={styles.rrpLoader} style={style}>
       {message}
     </div>
   );

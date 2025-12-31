@@ -78,8 +78,8 @@ export const RouteMap = ({
               isHorizontal={isHorizontal}
             />
           </Wrapper>
-          <div className={styles.chartLayer}>
-            <div className={styles.chartBody}>
+          <div className={styles.rrpChartLayer}>
+            <div className={styles.rrpChartBody}>
               <ElevationChart route={route} />
             </div>
           </div>

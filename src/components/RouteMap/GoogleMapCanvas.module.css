@@ -1,4 +1,4 @@
-.markerLabel {
+.rrpMarkerLabel {
   position: absolute;
   bottom: 2rem; /* bottom-8 */
   left: 1.25rem; /* left-5 */
@@ -9,7 +9,7 @@
   padding: 0.5rem; /* p-2 */
 }
 
-.mapCanvas {
+.rrpMapCanvas {
   width: 100%;
   overflow: hidden;
 }

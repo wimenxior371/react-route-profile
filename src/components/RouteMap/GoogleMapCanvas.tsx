@@ -82,7 +82,7 @@ export const GoogleMapCanvas = ({
             window.google?.maps?.CollisionBehavior?.REQUIRED_AND_HIDES_OPTIONAL,
         },
         label: {
-          className: styles.markerLabel,
+          className: styles.rrpMarkerLabel,
           fontSize: `${theme.map.markerLabelFontSize}px`,
           fontWeight: theme.map.markerLabelFontWeight,
           color: theme.colors.accent,
@@ -154,7 +154,7 @@ export const GoogleMapCanvas = ({
   return (
     <div
       ref={ref}
-      className={styles.mapCanvas}
+      className={styles.rrpMapCanvas}
       style={{
         height,
       }}
