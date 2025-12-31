@@ -1,21 +1,19 @@
 {
   "name": "react-route-profile",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "private": false,
   "type": "module",
   "packageManager": "bun@1.3.3",
-  "sideEffects": false,
+  "sideEffects": ["**/*.css"],
   "files": ["dist"],
   "exports": {
     ".": {
-      "style": "./dist/index.css",
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
     },
-    "./dist/index.css": {
-      "default": "./dist/index.css"
-    }
+    "./index.css": "./dist/index.css"
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
