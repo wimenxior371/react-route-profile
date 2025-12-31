@@ -82,7 +82,7 @@ export const GoogleMapCanvas = ({
             window.google?.maps?.CollisionBehavior?.REQUIRED_AND_HIDES_OPTIONAL,
         },
         label: {
-          className: styles.rrpMarkerLabel,
+          className: "rrpMarkerLabel",
           fontSize: `${theme.map.markerLabelFontSize}px`,
           fontWeight: theme.map.markerLabelFontWeight,
           color: theme.colors.accent,
