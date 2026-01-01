@@ -62,7 +62,13 @@ const Text = ({
       style={{ userSelect: "none" }}
     >
       {words.map((word, index) => (
-        <Word key={word} word={word} index={index} cx={cx} />
+        <Word
+          // biome-ignore lint/suspicious/noArrayIndexKey: TODO fix later
+          key={`${cx}-${cy}-word-${index}`}
+          word={word}
+          index={index}
+          cx={cx}
+        />
       ))}
     </text>
   );
