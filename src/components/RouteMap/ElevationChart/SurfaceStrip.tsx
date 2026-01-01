@@ -6,35 +6,34 @@ import surfacePenetrated from "../../../assets/surface/surface_penetrated.png";
 import type { RouteConfig } from "../../../types";
 import { SurfaceType } from "../../../types";
 
-const SURFACE_STRIP_WIDTH = 30;
 export const SURFACE_STRIP_HEIGHT = 16;
 
 export const SURFACE_TEXTURES: Record<
   SurfaceType,
-  { file: string; width?: number; height?: number }
+  {
+    file: string;
+    size: { width: number; height: number };
+  }
 > = {
   [SurfaceType.Asphalt]: {
     file: surfaceAsphalt,
-    width: 30,
-    height: 22,
+    size: { width: 30, height: 22 },
   },
   [SurfaceType.Compacted]: {
     file: surfaceCompacted,
-    width: 200,
-    height: 16,
+    size: { width: 375, height: 16 },
   },
   [SurfaceType.Concrete]: {
     file: surfaceConcrete,
+    size: { width: 30, height: 22 },
   },
   [SurfaceType.Natural]: {
     file: surfaceNatural,
-    width: 30,
-    height: 22,
+    size: { width: 30, height: 22 },
   },
   [SurfaceType.Penetrated]: {
     file: surfacePenetrated,
-    width: 30,
-    height: 22,
+    size: { width: 30, height: 22 },
   },
 };
 
@@ -81,27 +80,32 @@ export const SurfaceStrip = ({
     <>
       <defs>
         {Object.entries(SURFACE_TEXTURES).map(
-          ([surfaceType, { file, width, height }]) => (
-            <pattern
-              key={surfaceType}
-              id={`surface-${surfaceType}`}
-              patternUnits={
-                surfaceType === SurfaceType.Compacted
-                  ? undefined
-                  : "userSpaceOnUse"
-              }
-              width={width ?? SURFACE_STRIP_WIDTH}
-              height={height ?? SURFACE_STRIP_HEIGHT}
-            >
-              <image
-                href={file}
-                x="0"
-                y="0"
-                width={width ?? SURFACE_STRIP_WIDTH}
-                height={height ?? SURFACE_STRIP_HEIGHT}
-              />
-            </pattern>
-          )
+          ([surfaceType, { file, size }]) => {
+            const patternWidth = size.width;
+            const patternHeight = SURFACE_STRIP_HEIGHT;
+            const imageY = patternHeight - size.height;
+
+            return (
+              <pattern
+                key={`pattern-${surfaceType}`}
+                id={`surface-${surfaceType}`}
+                patternUnits="userSpaceOnUse"
+                patternContentUnits="userSpaceOnUse"
+                width={patternWidth}
+                height={patternHeight}
+                y={stripY}
+                overflow="hidden"
+              >
+                <image
+                  href={file}
+                  x="0"
+                  y={imageY}
+                  width={patternWidth}
+                  height={size.height}
+                />
+              </pattern>
+            );
+          }
         )}
       </defs>
       <g>
