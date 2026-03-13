@@ -1,23 +1,20 @@
 import { Status, Wrapper } from "@googlemaps/react-wrapper";
+import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
 import type { CSSProperties } from "react";
 import { useOrientation } from "../../hooks/useOrientation";
-import { theme as defaultTheme, type PartialTheme } from "../../theme";
+import { theme as defaultTheme } from "../../theme";
 import { ThemeProvider } from "../../theme-provider";
-import type { RouteConfig } from "../../types";
 import Loader from "../Loader";
 import { ElevationChart } from "./ElevationChart";
 import { GoogleMapCanvas } from "./GoogleMapCanvas";
 import { HoverProvider } from "./HoverContext";
+import { useChartFullscreen } from "./hooks/useChartFullscreen";
+import { useResponsiveRouteMapTheme } from "./hooks/useResponsiveRouteMapTheme";
+import { useViewport } from "./hooks/useViewport";
 import styles from "./RouteMap.module.css";
+import type { RouteMapProps } from "./types";
 
-export interface RouteMapProps {
-  apiKey: string;
-  route: RouteConfig;
-  height?: number | string;
-  className?: string;
-  style?: CSSProperties;
-  theme?: PartialTheme;
-}
+export type { RouteMapProps } from "./types";
 
 const messages = {
   apiKey: "Oops! Cannot display the map: Google Maps API key missing",
@@ -52,10 +49,18 @@ export const RouteMap = ({
   theme = defaultTheme,
 }: RouteMapProps) => {
   const { isHorizontal } = useOrientation();
+  const { isChartExpanded, toggleChartExpanded } = useChartFullscreen();
+  const viewport = useViewport();
+  const responsiveTheme = useResponsiveRouteMapTheme({
+    isHorizontal,
+    theme,
+    width: viewport.width,
+    height: viewport.height,
+  });
 
   if (!apiKey) {
     return (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={responsiveTheme}>
         <RenderLoader type="apiKey" height={height} />
       </ThemeProvider>
     );
@@ -68,17 +73,38 @@ export const RouteMap = ({
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={responsiveTheme}>
       <HoverProvider>
-        <div className={className} style={containerStyle}>
+        <div className={`${styles.rrpRoot} ${className ?? ""}`.trim()} style={containerStyle}>
           <Wrapper apiKey={apiKey} render={(status) => render(status, height)}>
-            <GoogleMapCanvas
-              route={route}
-              height={height}
-              isHorizontal={isHorizontal}
-            />
+            <GoogleMapCanvas route={route} height={height} isHorizontal={isHorizontal} />
           </Wrapper>
-          <div className={styles.rrpChartLayer}>
+          <div
+            className={[
+              styles.rrpChartLayer,
+              isChartExpanded ? styles.rrpChartLayerExpanded : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+          >
+            <div className={styles.rrpToolbar}>
+              <div />
+              <button
+                type="button"
+                className={styles.rrpIconButton}
+                onClick={toggleChartExpanded}
+                aria-label={
+                  isChartExpanded ? "Minimize route profile" : "Expand route profile"
+                }
+                title={isChartExpanded ? "Minimize route profile" : "Expand route profile"}
+              >
+                {isChartExpanded ? (
+                  <MdFullscreenExit className={styles.rrpIcon} />
+                ) : (
+                  <MdFullscreen className={styles.rrpIcon} />
+                )}
+              </button>
+            </div>
             <div className={styles.rrpChartBody}>
               <ElevationChart route={route} />
             </div>

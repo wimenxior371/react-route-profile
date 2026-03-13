@@ -54,6 +54,7 @@ export const GoogleMapCanvas = ({
       center: route.center || DEFAULT_CENTER,
       zoom,
       mapTypeId: window.google.maps.MapTypeId.SATELLITE,
+      mapTypeControl: true,
       streetViewControl: false,
     });
     mapRef.current = map;

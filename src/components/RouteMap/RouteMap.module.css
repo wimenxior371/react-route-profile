@@ -1,3 +1,8 @@
+.rrpRoot {
+  position: relative;
+  overflow: hidden;
+}
+
 .rrpChartLayer {
   position: absolute;
   left: 25px;
@@ -13,6 +18,71 @@
   flex-direction: column;
   gap: 6px;
   pointer-events: auto;
+  z-index: 2;
+  backdrop-filter: blur(10px);
+}
+
+.rrpChartLayerExpanded {
+  position: fixed;
+  inset: 0;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  box-sizing: border-box;
+  border-radius: 0;
+  padding: 24px;
+  z-index: 9999;
+  background: rgba(2, 6, 23, 0.96);
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.rrpChartLayerExpanded .rrpToolbar {
+  justify-content: flex-end;
+}
+
+.rrpChartLayerExpanded .rrpChartBody {
+  padding: 8px 4px 4px;
+}
+
+.rrpToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.rrpIconButton {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  color: rgba(226, 232, 240, 0.9);
+  transition:
+    color 140ms ease,
+    transform 140ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: transparent;
+}
+
+.rrpIconButton:active {
+  transform: translateY(1px);
+}
+
+.rrpIconButton:hover {
+  color: rgba(255, 255, 255, 1);
+}
+
+.rrpIcon {
+  width: 28px;
+  height: 28px;
 }
 
 .rrpChartBody {
@@ -21,9 +91,28 @@
 }
 
 @media (orientation: portrait) {
-  .rrpChartLayer {
+  .rrpChartLayer:not(.rrpChartLayerExpanded) {
     width: 80%;
     left: 10px;
     right: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .rrpChartLayer:not(.rrpChartLayerExpanded) {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    width: auto;
+    height: 220px;
+  }
+
+  .rrpChartLayerExpanded {
+    inset: 0;
+    padding: 16px;
+  }
+
+  .rrpToolbar {
+    gap: 8px;
   }
 }
