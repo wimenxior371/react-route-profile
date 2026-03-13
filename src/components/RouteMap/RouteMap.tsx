@@ -1,5 +1,5 @@
 import { Status, Wrapper } from "@googlemaps/react-wrapper";
-import { type CSSProperties, useMemo } from "react";
+import { type CSSProperties, useMemo, useRef } from "react";
 import { useOrientation } from "../../hooks/useOrientation";
 import { I18nProvider, useI18n } from "../../i18n";
 import { theme as defaultTheme } from "../../theme";
@@ -8,6 +8,7 @@ import Loader from "../Loader";
 import { getMaxDistance, getPointsWithElevation } from "./ElevationChart/utils";
 import { GoogleMapCanvas } from "./GoogleMapCanvas";
 import { useChartFullscreen } from "./hooks/useChartFullscreen";
+import { useRouteMapFullscreen } from "./hooks/useRouteMapFullscreen";
 import { useResponsiveRouteMapTheme } from "./hooks/useResponsiveRouteMapTheme";
 import { useViewport } from "./hooks/useViewport";
 import { HoverProvider } from "./HoverContext";
@@ -60,10 +61,12 @@ const RouteMapContent = ({
   style,
   theme = defaultTheme,
 }: Omit<RouteMapProps, "lang">) => {
-  const { isHorizontal } = useOrientation();
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const isMapFullscreen = useRouteMapFullscreen(rootRef);
+  const { isHorizontal } = useOrientation(isMapFullscreen);
   const { routeMap } = useI18n();
   const { isChartExpanded, toggleChartExpanded } = useChartFullscreen();
-  const viewport = useViewport();
+  const viewport = useViewport(isMapFullscreen);
   const responsiveTheme = useResponsiveRouteMapTheme({
     isHorizontal,
     theme,
@@ -102,7 +105,11 @@ const RouteMapContent = ({
   return (
     <ThemeProvider theme={responsiveTheme}>
       <HoverProvider>
-        <div className={`${styles.rrpRoot} ${className ?? ""}`.trim()} style={containerStyle}>
+        <div
+          ref={rootRef}
+          className={`${styles.rrpRoot} ${className ?? ""}`.trim()}
+          style={containerStyle}
+        >
           <Wrapper
             apiKey={apiKey}
             render={(status) => (

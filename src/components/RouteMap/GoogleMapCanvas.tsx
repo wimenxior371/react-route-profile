@@ -11,9 +11,9 @@ import {
   findNearestPointByCoordinates,
   getAllPoints,
 } from "./ElevationChart/utils";
-import "./index.css";
 import styles from "./GoogleMapCanvas.module.css";
 import { HoverStateChangeSource, useHover } from "./HoverContext";
+import "./index.css";
 
 interface GoogleMapCanvasProps {
   route: RouteConfig;
@@ -31,6 +31,7 @@ export const GoogleMapCanvas = ({
   const ref = useRef<HTMLDivElement | null>(null);
   const highlightMarkerRef = useRef<google.maps.Marker | null>(null);
   const mapRef = useRef<google.maps.Map | null>(null);
+  const moveListenerRef = useRef<google.maps.MapsEventListener | null>(null);
   const points = useMemo(() => getAllPoints(route), [route]);
   const markerIcons = useMemo(
     () => ({
@@ -40,25 +41,86 @@ export const GoogleMapCanvas = ({
     }),
     [theme.marker]
   );
+  const center = route.center || DEFAULT_CENTER;
+  const zoom =
+    (isHorizontal && (route.zoomHorizontal || DEFAULT_ZOOM_HORIZONTAL)) ||
+    route.zoomVertical ||
+    DEFAULT_ZOOM_VERTICAL;
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: we do not want to reinitiate the map on center, zoom update
+  useEffect(() => {
+    if (!ref.current || !window.google?.maps) {
+      return;
+    }
+
+    mapRef.current = new window.google.maps.Map(ref.current, {
+      center,
+      zoom,
+      mapTypeId: window.google.maps.MapTypeId.SATELLITE,
+      mapTypeControl: true,
+      mapTypeControlOptions: {
+        style: window.google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+        position: window.google.maps.ControlPosition.TOP_LEFT,
+      },
+      fullscreenControl: true,
+      streetViewControl: false,
+    });
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      moveListenerRef.current?.remove();
+      moveListenerRef.current = null;
+      highlightMarkerRef.current?.setMap(null);
+      highlightMarkerRef.current = null;
+      mapRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !window.google?.maps) {
+      return;
+    }
+
+    map.setOptions({
+      center,
+      zoom,
+    });
+  }, [center, zoom]);
 
   useEffect(() => {
     if (!ref.current || !window.google?.maps) {
       return;
     }
 
-    const zoom =
-      (isHorizontal && (route.zoomHorizontal || DEFAULT_ZOOM_HORIZONTAL)) ||
-      route.zoomVertical ||
-      DEFAULT_ZOOM_VERTICAL;
+    const map = mapRef.current;
+    if (!map) {
+      return;
+    }
 
-    const map = new window.google.maps.Map(ref.current, {
-      center: route.center || DEFAULT_CENTER,
-      zoom,
-      mapTypeId: window.google.maps.MapTypeId.SATELLITE,
-      mapTypeControl: true,
-      streetViewControl: false,
+    const syncMapViewport = () => {
+      window.google.maps.event.trigger(map, "resize");
+      map.setCenter(center);
+      map.setZoom(zoom);
+    };
+
+    const resizeObserver = new ResizeObserver(() => {
+      requestAnimationFrame(syncMapViewport);
     });
-    mapRef.current = map;
+
+    resizeObserver.observe(ref.current);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [center, zoom]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !window.google?.maps) {
+      return;
+    }
 
     map.data.setStyle((feature: google.maps.Data.Feature) => {
       const name = feature.getProperty("name") as string;
@@ -72,8 +134,8 @@ export const GoogleMapCanvas = ({
           url: isFirst
             ? markerIcons.start
             : isLast
-            ? markerIcons.finish
-            : markerIcons.default,
+              ? markerIcons.finish
+              : markerIcons.default,
           scaledSize: new window.google.maps.Size(
             theme.map.markerSize,
             theme.map.markerSize
@@ -92,10 +154,29 @@ export const GoogleMapCanvas = ({
         },
       };
     });
+  }, [markerIcons, theme]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) {
+      return;
+    }
+
+    map.data.forEach((feature: google.maps.Data.Feature) => {
+      map.data.remove(feature);
+    });
 
     map.data.addGeoJson(route.geoJson);
+  }, [route.geoJson]);
 
-    const moveListener = map.addListener(
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) {
+      return;
+    }
+
+    moveListenerRef.current?.remove();
+    moveListenerRef.current = map.addListener(
       "mousemove",
       (e: google.maps.MapMouseEvent) => {
         const latLng = e.latLng;
@@ -115,13 +196,10 @@ export const GoogleMapCanvas = ({
     );
 
     return () => {
-      moveListener.remove();
-      map.data.forEach((feature: google.maps.Data.Feature) => {
-        map.data.remove(feature);
-      });
-      mapRef.current = null;
+      moveListenerRef.current?.remove();
+      moveListenerRef.current = null;
     };
-  }, [route, isHorizontal, theme, points, setHover, markerIcons]);
+  }, [points, setHover]);
 
   useEffect(() => {
     if (!ref.current || !window.google?.maps) return;
