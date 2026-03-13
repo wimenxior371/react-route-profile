@@ -11,6 +11,7 @@ import {
   findNearestPointByCoordinates,
   getAllPoints,
 } from "./ElevationChart/utils";
+import "./index.css";
 import styles from "./GoogleMapCanvas.module.css";
 import { HoverStateChangeSource, useHover } from "./HoverContext";
 
