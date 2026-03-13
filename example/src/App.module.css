@@ -14,13 +14,6 @@ h4 {
   text-shadow: 0 0 1em rgba(255, 255, 255, 0.5);
 }
 
-.container {
-  min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
 .header {
   position: sticky;
   top: 0;
@@ -97,6 +90,10 @@ h4 {
 .mapWrapper {
   flex: 0 0 auto;
   overflow: hidden;
+}
+
+.mapSection {
+  position: relative;
 }
 
 .content {
