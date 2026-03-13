@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { useI18n } from "../i18n";
 import { useTheme } from "../theme-provider";
 import styles from "./Loader.module.css";
 
@@ -8,10 +9,11 @@ interface LoaderProps {
 }
 
 const Loader = ({
-  message = "Loading map...",
+  message,
   height = "100dvh",
 }: LoaderProps) => {
   const theme = useTheme();
+  const { loader } = useI18n();
 
   const style: CSSProperties = {
     height,
@@ -21,7 +23,7 @@ const Loader = ({
 
   return (
     <div className={styles.rrpLoader} style={style}>
-      {message}
+      {message ?? loader.loadingMap}
     </div>
   );
 };

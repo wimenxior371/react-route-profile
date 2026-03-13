@@ -1,5 +1,6 @@
 
 export { RouteMap, type RouteMapProps } from "./components/RouteMap";
+export type { RouteMapLang } from "./i18n";
 export { useMapHeader } from "./hooks/useMapHeader";
 export { theme } from "./theme";
 export type { PartialTheme, Theme, ThemeChart, ThemeColors, ThemeDots, ThemeMap, ThemeMarker, ThemeMarkerShape, ThemeShadows, ThemeTooltip } from "./theme";

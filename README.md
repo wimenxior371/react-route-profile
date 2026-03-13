@@ -33,7 +33,7 @@ const myRoute: RouteConfig = {
   routes: [{ id: "A12", color: "green", segment: [0, 1000] }],
 };
 
-<RouteMap apiKey={apiKey} route={myRoute} height="100dvh" />;
+<RouteMap apiKey={apiKey} route={myRoute} height="100dvh" lang="en" />;
 ```
 
 ### Precompute elevation offline
@@ -61,7 +61,7 @@ const myTheme: Theme = {
   },
 };
 
-<RouteMap apiKey={apiKey} route={myRoute} theme={myTheme} />;
+<RouteMap apiKey={apiKey} route={myRoute} theme={myTheme} lang="en" />;
 ```
 
 ### Sticky header sizing
@@ -76,7 +76,7 @@ const {
 
 <header ref={refHeader}>Header</header>
 <div style={{ height: mapHeight }}>
-  <RouteMap apiKey={apiKey} route={myRoute} height={mapHeight} />
+  <RouteMap apiKey={apiKey} route={myRoute} height={mapHeight} lang="en" />
 </div>;
 ```
 
@@ -84,26 +84,27 @@ const {
 
 ### RouteMap props
 
-| Prop      | Type             | Description                                            |
-| --------- | ---------------- | ------------------------------------------------------ |
-| apiKey    | string           | Required Google Maps JS API key.                       |
-| route     | RouteConfig      | Route data (center, zooms, geoJson).                   |
-| height    | number \| string | Map height (e.g., `520` or `"100dvh"`).                |
-| className | string           | Optional wrapper class.                                |
-| style     | CSSProperties    | Inline style overrides.                                |
-| theme     | Theme            | Optional theme override (colors, marker/dots, layout). |
+| Prop      | Type                   | Description                                            |
+| --------- | ---------------------- | ------------------------------------------------------ |
+| apiKey    | string                 | Required Google Maps JS API key.                       |
+| route     | RouteConfig            | Route data (center, zooms, geoJson).                   |
+| height    | number \| string       | Map height (e.g., `520` or `"100dvh"`).                |
+| className | string                 | Optional wrapper class.                                |
+| style     | CSSProperties          | Inline style overrides.                                |
+| theme     | Theme                  | Optional theme override (colors, marker/dots, layout). |
+| lang      | `"de" \| "en" \| "sk"` | Optional UI language for built-in labels.              |
 
 ### RouteConfig
 
-| Field          | Type                                                | Description                               |
-| -------------- | --------------------------------------------------- | ----------------------------------------- |
-| id             | string                                              | Identifier for the route.                 |
-| name           | string                                              | Display name.                             |
-| center         | `{ lat: number; lng: number }`                      | Map center.                               |
-| zoomHorizontal | number (optional)                                   | Zoom when landscape.                      |
-| zoomVertical   | number (optional)                                   | Zoom when portrait.                       |
-| geoJson        | FeatureCollection                                   | GeoJSON geometry and features.            |
-| surface        | `Array<{ segment: [number, number]; type: SurfaceType }>` | Optional surface segments for the strip. |
+| Field          | Type                                                              | Description                                  |
+| -------------- | ----------------------------------------------------------------- | -------------------------------------------- |
+| id             | string                                                            | Identifier for the route.                    |
+| name           | string                                                            | Display name.                                |
+| center         | `{ lat: number; lng: number }`                                    | Map center.                                  |
+| zoomHorizontal | number (optional)                                                 | Zoom when landscape.                         |
+| zoomVertical   | number (optional)                                                 | Zoom when portrait.                          |
+| geoJson        | FeatureCollection                                                 | GeoJSON geometry and features.               |
+| surface        | `Array<{ segment: [number, number]; type: SurfaceType }>`         | Optional surface segments for the strip.     |
 | routes         | `Array<{ id: string; color: string; segment: [number, number] }>` | Optional route segments for the route strip. |
 
 ### Theme

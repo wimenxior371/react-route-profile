@@ -25,7 +25,7 @@ export const Usage = () => (
         <code>
           {`const apiKey = process.env.VITE_GOOGLE_MAPS_API_KEY || "";
 
-<RouteMap apiKey={apiKey} route={myRoute} />`}
+<RouteMap apiKey={apiKey} route={myRoute} lang="en" />`}
         </code>
       </pre>
       <div>
@@ -77,6 +77,7 @@ export const Usage = () => (
   apiKey={apiKey}
   route={myRoute}
   height="100dvh"
+  lang="en"
 />`}
         </code>
       </pre>
@@ -104,8 +105,9 @@ export const Usage = () => (
       </pre>
       <div>
         (Optional) Adjust <code className={styles.inlineCode}>height</code>,{" "}
-        <code className={styles.inlineCode}>className</code>, or{" "}
-        <code className={styles.inlineCode}>style</code> to fit your layout.
+        <code className={styles.inlineCode}>className</code>,{" "}
+        <code className={styles.inlineCode}>style</code>, or{" "}
+        <code className={styles.inlineCode}>lang</code> to fit your layout.
       </div>
       <pre className={styles.codeBlock}>
         <code>
@@ -113,6 +115,7 @@ export const Usage = () => (
   apiKey={apiKey}
   route={myRoute}
   height="80vh"
+  lang="en"
   className="my-map"
   style={{ borderRadius: 12 }}
 />`}
@@ -141,7 +144,13 @@ const myTheme: Theme = {
   markerShape: { size: 30, text: { fontSize: 11 } },
 };
 
-<RouteMap apiKey={apiKey} route={myRoute} height="80vh" theme={myTheme} />`}
+<RouteMap
+  apiKey={apiKey}
+  route={myRoute}
+  height="80vh"
+  lang="en"
+  theme={myTheme}
+/>`}
         </code>
       </pre>
       <div>
@@ -159,7 +168,7 @@ const myTheme: Theme = {
   Header
 </header>
 <div style={{ height: mapHeight }}>
-  <RouteMap apiKey={apiKey} route={myRoute} height={mapHeight} />
+  <RouteMap apiKey={apiKey} route={myRoute} height={mapHeight} lang="en" />
 </div>`}
         </code>
       </pre>
@@ -210,6 +219,11 @@ const myTheme: Theme = {
               Optional theme override (colors, marker/dots, routeMap layout)
               used by map, chart, and loader.
             </td>
+          </tr>
+          <tr>
+            <td>lang?</td>
+            <td>"de" | "en" | "sk"</td>
+            <td>Optional UI language for built-in labels.</td>
           </tr>
         </tbody>
       </table>

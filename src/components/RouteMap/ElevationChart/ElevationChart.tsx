@@ -137,6 +137,7 @@ export const ElevationChart = ({ route }: ElevationChartProps) => {
           tick={<ElevationTick />}
           domain={[minY, maxY]}
           ticks={tickVals}
+          padding={{ top: 20, bottom: 20 }}
           stroke={theme.chart.axisStroke}
           width={theme.chart.yAxisWidth}
         />

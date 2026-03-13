@@ -1,3 +1,4 @@
+import { useI18n } from "../../../i18n";
 import type { TooltipProps } from "recharts";
 import { useTheme } from "../../../theme-provider";
 import type { RouteConfig, SurfaceType } from "../../../types";
@@ -43,9 +44,6 @@ const getRouteForDistance = (
   );
 };
 
-const formatSurfaceLabel = (surface: SurfaceType) =>
-  surface.charAt(0).toUpperCase() + surface.slice(1);
-
 const formatSegmentLabel = (segment: [number, number]) => {
   const [start, end] = segment;
   const segStart = Math.min(start, end);
@@ -69,6 +67,7 @@ export const ElevationTooltip = ({
   routes,
 }: ElevationTooltipProps) => {
   const { tooltip } = useTheme();
+  const { surface: surfaceTranslations, tooltip: tooltipTranslations } = useI18n();
 
   if (!active || !payload?.length) return null;
 
@@ -102,7 +101,7 @@ export const ElevationTooltip = ({
         {km} km {m} m
       </div>
       <div>
-        Elevation: <strong>{Math.round(point?.elevation ?? 0)} m</strong>
+        {tooltipTranslations.elevation}: <strong>{Math.round(point?.elevation ?? 0)} m</strong>
       </div>
       {surface?.type ? (
         <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
@@ -125,7 +124,7 @@ export const ElevationTooltip = ({
               <rect width="20" height="14" fill={tooltip.textColor} />
             )}
           </svg>
-          <span>{formatSurfaceLabel(surface.type)}</span>
+          <span>{surfaceTranslations[surface.type as SurfaceType]}</span>
           <span>{formatSegmentLabel(surface.segment)}</span>
         </div>
       ) : null}

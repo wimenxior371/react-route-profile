@@ -1,43 +1,32 @@
 import { Status, Wrapper } from "@googlemaps/react-wrapper";
-import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
-import type { CSSProperties } from "react";
+import { type CSSProperties, useMemo } from "react";
 import { useOrientation } from "../../hooks/useOrientation";
+import { I18nProvider, useI18n } from "../../i18n";
 import { theme as defaultTheme } from "../../theme";
 import { ThemeProvider } from "../../theme-provider";
 import Loader from "../Loader";
-import { ElevationChart } from "./ElevationChart";
+import { getMaxDistance, getPointsWithElevation } from "./ElevationChart/utils";
 import { GoogleMapCanvas } from "./GoogleMapCanvas";
-import { HoverProvider } from "./HoverContext";
 import { useChartFullscreen } from "./hooks/useChartFullscreen";
 import { useResponsiveRouteMapTheme } from "./hooks/useResponsiveRouteMapTheme";
 import { useViewport } from "./hooks/useViewport";
+import { HoverProvider } from "./HoverContext";
+import { RouteMapChartLayer } from "./RouteMapChartLayer";
 import styles from "./RouteMap.module.css";
 import type { RouteMapProps } from "./types";
 
 export type { RouteMapProps } from "./types";
 
-const messages = {
-  apiKey: "Oops! Cannot display the map: Google Maps API key missing",
-  [Status.FAILURE]:
-    "Unable to load Google Maps API. Check your API key or network.",
-  [Status.LOADING]: undefined,
-  [Status.SUCCESS]: undefined,
-};
-
 const RenderLoader = ({
-  type,
+  message,
   height,
 }: {
-  type: keyof typeof messages;
+  message?: string;
   height?: number | string;
 }) => (
   <div style={{ height }}>
-    <Loader message={messages[type]} height={height} />
+    <Loader message={message} height={height} />
   </div>
-);
-
-const render = (status: Status, height?: number | string) => (
-  <RenderLoader type={status} height={height} />
 );
 
 export const RouteMap = ({
@@ -47,8 +36,32 @@ export const RouteMap = ({
   className,
   style,
   theme = defaultTheme,
+  lang = "en",
 }: RouteMapProps) => {
+  return (
+    <I18nProvider lang={lang}>
+      <RouteMapContent
+        apiKey={apiKey}
+        route={route}
+        height={height}
+        className={className}
+        style={style}
+        theme={theme}
+      />
+    </I18nProvider>
+  );
+};
+
+const RouteMapContent = ({
+  apiKey,
+  route,
+  height = "100dvh",
+  className,
+  style,
+  theme = defaultTheme,
+}: Omit<RouteMapProps, "lang">) => {
   const { isHorizontal } = useOrientation();
+  const { routeMap } = useI18n();
   const { isChartExpanded, toggleChartExpanded } = useChartFullscreen();
   const viewport = useViewport();
   const responsiveTheme = useResponsiveRouteMapTheme({
@@ -57,11 +70,25 @@ export const RouteMap = ({
     width: viewport.width,
     height: viewport.height,
   });
+  const elevationPoints = useMemo(() => getPointsWithElevation(route), [route]);
+  const maxDistance = useMemo(() => getMaxDistance(elevationPoints), [elevationPoints]);
+  const pointFeatureCount = useMemo(() => {
+    const geoJson = route.geoJson as { features?: Array<{ geometry?: { type?: string } }> };
+    return (
+      geoJson.features?.filter((feature) => feature.geometry?.type === "Point").length ?? 0
+    );
+  }, [route.geoJson]);
+  const isSmallVerticalScreen = !isHorizontal && viewport.width <= 767;
+  const isScrollableChartExpanded =
+    isChartExpanded &&
+    isSmallVerticalScreen &&
+    maxDistance >= 30000 &&
+    pointFeatureCount > 10;
 
   if (!apiKey) {
     return (
       <ThemeProvider theme={responsiveTheme}>
-        <RenderLoader type="apiKey" height={height} />
+        <RenderLoader message={routeMap.apiKeyMissing} height={height} />
       </ThemeProvider>
     );
   }
@@ -76,39 +103,23 @@ export const RouteMap = ({
     <ThemeProvider theme={responsiveTheme}>
       <HoverProvider>
         <div className={`${styles.rrpRoot} ${className ?? ""}`.trim()} style={containerStyle}>
-          <Wrapper apiKey={apiKey} render={(status) => render(status, height)}>
+          <Wrapper
+            apiKey={apiKey}
+            render={(status) => (
+              <RenderLoader
+                message={status === Status.FAILURE ? routeMap.googleMapsFailure : undefined}
+                height={height}
+              />
+            )}
+          >
             <GoogleMapCanvas route={route} height={height} isHorizontal={isHorizontal} />
           </Wrapper>
-          <div
-            className={[
-              styles.rrpChartLayer,
-              isChartExpanded ? styles.rrpChartLayerExpanded : "",
-            ]
-              .filter(Boolean)
-              .join(" ")}
-          >
-            <div className={styles.rrpToolbar}>
-              <div />
-              <button
-                type="button"
-                className={styles.rrpIconButton}
-                onClick={toggleChartExpanded}
-                aria-label={
-                  isChartExpanded ? "Minimize route profile" : "Expand route profile"
-                }
-                title={isChartExpanded ? "Minimize route profile" : "Expand route profile"}
-              >
-                {isChartExpanded ? (
-                  <MdFullscreenExit className={styles.rrpIcon} />
-                ) : (
-                  <MdFullscreen className={styles.rrpIcon} />
-                )}
-              </button>
-            </div>
-            <div className={styles.rrpChartBody}>
-              <ElevationChart route={route} />
-            </div>
-          </div>
+          <RouteMapChartLayer
+            route={route}
+            isChartExpanded={isChartExpanded}
+            isScrollableChartExpanded={isScrollableChartExpanded}
+            onToggleChartExpanded={toggleChartExpanded}
+          />
         </div>
       </HoverProvider>
     </ThemeProvider>
