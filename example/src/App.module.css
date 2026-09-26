@@ -34,6 +34,13 @@ h4 {
   color: #e2e8f0;
 }
 
+.version {
+  color: #84cc16;
+  font-size: 0.75em;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
 .subtitle {
   margin: 6px 0 0;
   font-size: 1em;

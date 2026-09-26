@@ -2,7 +2,6 @@ import { useEffect, useMemo } from "react";
 import {
   CartesianGrid,
   ComposedChart,
-  Customized,
   Line,
   ReferenceDot,
   ReferenceLine,
@@ -82,13 +81,13 @@ export const ElevationChart = ({ route }: ElevationChartProps) => {
       <ComposedChart
         data={points}
         margin={theme.chart.margin}
-        onMouseMove={({ activePayload }) => {
-          activeIndex && clearActiveIndex();
-          const activePayloadItem = activePayload?.[0];
-          if (!activePayloadItem) {
+        onMouseMove={({ activeIndex: tooltipIndex }) => {
+          clearActiveIndex();
+          const hoveredPoint = tooltipIndex == null ? undefined : points[Number(tooltipIndex)];
+          if (!hoveredPoint) {
             return;
           }
-          const { lat, lng } = activePayloadItem.payload;
+          const { lat, lng } = hoveredPoint;
           setHover({ lat, lng, source: HoverStateChangeSource.Chart });
         }}
         onMouseEnter={() => clearActiveIndex()}
@@ -112,18 +111,12 @@ export const ElevationChart = ({ route }: ElevationChartProps) => {
           stroke={theme.chart.gridStroke}
           strokeDasharray={theme.chart.gridDasharray}
         />
-        <Customized
-          component={
-            <RouteStrip
-              route={route}
-              maxDistance={maxDistance}
-              belowHeight={SURFACE_STRIP_HEIGHT}
-            />
-          }
+        <RouteStrip
+          route={route}
+          maxDistance={maxDistance}
+          belowHeight={SURFACE_STRIP_HEIGHT}
         />
-        <Customized
-          component={<SurfaceStrip route={route} maxDistance={maxDistance} />}
-        />
+        <SurfaceStrip route={route} maxDistance={maxDistance} />
         <XAxis
           dataKey="distance"
           type="number"

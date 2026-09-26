@@ -1,6 +1,12 @@
 import { useMeasure } from "@uidotdev/usehooks";
+import type { RefCallback } from "react";
 
-export const useMapHeader = () => {
+export const useMapHeader = (): {
+  refHeader: RefCallback<Element>;
+  isHeaderReady: boolean;
+  headerHeight: number | null;
+  mapHeight: string;
+} => {
   const [refHeader, { height: headerHeight }] = useMeasure();
 
   const isHeaderReady = Boolean(headerHeight);

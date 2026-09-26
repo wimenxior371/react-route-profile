@@ -1,3 +1,4 @@
+import { usePlotArea, useXAxisScale } from "recharts";
 import type { RouteConfig } from "../../../types";
 
 export const ROUTE_STRIP_HEIGHT = 16;
@@ -6,41 +7,29 @@ type RouteStripProps = {
   route: RouteConfig;
   maxDistance: number;
   belowHeight?: number;
-  xAxisMap?: Record<
-    string,
-    {
-      scale?: (value: number) => number;
-      x?: number;
-      y?: number;
-      width?: number;
-    }
-  >;
-  offset?: { left?: number; top?: number; width?: number; height?: number };
 };
 
 export const RouteStrip = ({
   route,
   maxDistance,
   belowHeight = 0,
-  xAxisMap,
-  offset,
 }: RouteStripProps) => {
+  const plotArea = usePlotArea();
+  const scale = useXAxisScale();
   const routes = route.routes ?? [];
   if (!routes.length) {
     return null;
   }
 
-  const xAxis = xAxisMap ? Object.values(xAxisMap)[0] : undefined;
-  const scale = xAxis?.scale;
-  const chartLeft = xAxis?.x ?? offset?.left ?? 0;
-  const chartWidth = xAxis?.width ?? offset?.width ?? 0;
-  const axisY = xAxis?.y ?? (offset?.top ?? 0) + (offset?.height ?? 0);
-  const height = ROUTE_STRIP_HEIGHT;
-  const stripY = axisY - belowHeight - height;
-
-  if (!scale || chartWidth <= 0) {
+  if (!scale || !plotArea || plotArea.width <= 0) {
     return null;
   }
+
+  const chartLeft = plotArea.x;
+  const chartWidth = plotArea.width;
+  const axisY = plotArea.y + plotArea.height;
+  const height = ROUTE_STRIP_HEIGHT;
+  const stripY = axisY - belowHeight - height;
 
   return (
     <g>
@@ -63,6 +52,7 @@ export const RouteStrip = ({
 
         const startX = scale(segStart);
         const endX = scale(segEnd);
+        if (startX == null || endX == null) return null;
         const x = Math.min(startX, endX);
         const width = Math.max(0, Math.abs(endX - startX));
         if (width <= 0) {

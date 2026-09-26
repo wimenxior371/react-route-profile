@@ -1,3 +1,4 @@
+import { usePlotArea, useXAxisScale } from "recharts";
 import surfaceAsphalt from "../../../assets/surface/surface_asphalt.png";
 import surfaceCompacted from "../../../assets/surface/surface_compacted.png";
 import surfaceConcrete from "../../../assets/surface/surface_concrete.png";
@@ -41,40 +42,28 @@ type SurfaceStripProps = {
   route: RouteConfig;
   maxDistance: number;
   height?: number;
-  xAxisMap?: Record<
-    string,
-    {
-      scale?: (value: number) => number;
-      x?: number;
-      y?: number;
-      width?: number;
-    }
-  >;
-  offset?: { left?: number; top?: number; width?: number; height?: number };
 };
 
 export const SurfaceStrip = ({
   route,
   maxDistance,
-  xAxisMap,
-  offset,
 }: SurfaceStripProps) => {
+  const plotArea = usePlotArea();
+  const scale = useXAxisScale();
   const surfaces = route.surface ?? [];
   if (!surfaces.length) {
     return null;
   }
 
-  const xAxis = xAxisMap ? Object.values(xAxisMap)[0] : undefined;
-  const scale = xAxis?.scale;
-  const chartLeft = xAxis?.x ?? offset?.left ?? 0;
-  const chartWidth = xAxis?.width ?? offset?.width ?? 0;
-  const axisY = xAxis?.y ?? (offset?.top ?? 0) + (offset?.height ?? 0);
-  const height = SURFACE_STRIP_HEIGHT;
-  const stripY = axisY - height;
-
-  if (!scale || chartWidth <= 0) {
+  if (!scale || !plotArea || plotArea.width <= 0) {
     return null;
   }
+
+  const chartLeft = plotArea.x;
+  const chartWidth = plotArea.width;
+  const axisY = plotArea.y + plotArea.height;
+  const height = SURFACE_STRIP_HEIGHT;
+  const stripY = axisY - height;
 
   return (
     <>
@@ -128,6 +117,7 @@ export const SurfaceStrip = ({
 
           const startX = scale(segStart);
           const endX = scale(segEnd);
+          if (startX == null || endX == null) return null;
           const x = Math.min(startX, endX);
           const width = Math.max(0, Math.abs(endX - startX));
           if (width <= 0) {

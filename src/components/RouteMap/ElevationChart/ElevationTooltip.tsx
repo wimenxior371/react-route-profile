@@ -1,10 +1,10 @@
 import { useI18n } from "../../../i18n";
-import type { TooltipProps } from "recharts";
+import type { TooltipContentProps } from "recharts";
 import { useTheme } from "../../../theme-provider";
 import type { RouteConfig, SurfaceType } from "../../../types";
 import { SURFACE_TEXTURES } from "./SurfaceStrip";
 
-interface ElevationTooltipProps extends TooltipProps<number, string> {
+interface ElevationTooltipProps extends Partial<TooltipContentProps<number, string>> {
   accent: string;
   primary: string;
   markers: Array<{ distance: number; name?: string }>;

@@ -1,73 +1,77 @@
 {
-  "name": "react-route-profile",
-  "version": "0.1.42",
-  "private": false,
-  "type": "module",
-  "packageManager": "bun@1.3.3",
-  "sideEffects": ["**/*.css"],
-  "files": ["dist"],
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
-      "default": "./dist/index.js"
-    },
-    "./index.css": "./dist/index.css"
-  },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "style": "./dist/index.css",
-  "types": "./dist/index.d.ts",
-  "peerDependencies": {
-    "react": ">=18",
-    "react-dom": ">=18"
-  },
-  "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "clean": "rm -rf dist",
-    "prepare": "bun run build",
-    "fetch-elevation": "bun run bin/fetch-elevation.js"
-  },
-  "bin": {
-    "fetch-elevation": "./bin/fetch-elevation.js"
-  },
-  "devDependencies": {
-    "@types/google.maps": "^3.58.1",
-    "@types/node": "^24.10.1",
-    "@types/react": "^18.3.0",
-    "@types/react-dom": "^18.3.0",
-    "@uidotdev/usehooks": "^2.3.1",
-    "tsup": "^8.5.1",
-    "typescript": "^5.6.0"
-  },
-  "dependencies": {
-    "@googlemaps/react-wrapper": "^1.2.0",
-    "react-icons": "^5.6.0",
-    "recharts": "^2.12.7"
-  },
-  "keywords": [
-    "react",
-    "react-component",
-    "map",
-    "google-maps",
-    "gpx",
-    "geojson",
-    "route",
-    "route-profile",
-    "track",
-    "elevation",
-    "elevation-profile",
-    "chart",
-    "visualization"
-  ],
-  "bugs": {
-    "url": "https://github.com/wimenxior371/react-route-profile/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/wimenxior371/react-route-profile.git"
-  },
-  "license": "MIT"
+	"name": "react-route-profile",
+	"version": "0.1.43",
+	"private": false,
+	"type": "module",
+	"packageManager": "bun@1.4.2",
+	"sideEffects": [
+		"**/*.css"
+	],
+	"files": [
+		"dist"
+	],
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs",
+			"default": "./dist/index.js"
+		},
+		"./index.css": "./dist/index.css"
+	},
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.js",
+	"style": "./dist/index.css",
+	"types": "./dist/index.d.ts",
+	"peerDependencies": {
+		"react": ">=18",
+		"react-dom": ">=18"
+	},
+	"scripts": {
+		"build": "tsup",
+		"dev": "tsup --watch",
+		"clean": "rm -rf dist",
+		"prepare": "bun run build",
+		"fetch-elevation": "bun run bin/fetch-elevation.js"
+	},
+	"bin": {
+		"fetch-elevation": "./bin/fetch-elevation.js"
+	},
+	"devDependencies": {
+		"@types/google.maps": "^3.66.4",
+		"@types/node": "^26.6.3",
+		"@types/react": "^19.3.0",
+		"@types/react-dom": "^19.3.0",
+		"@uidotdev/usehooks": "^2.4.1",
+		"tsup": "^8.5.1",
+		"typescript": "^5.9.3"
+	},
+	"dependencies": {
+		"@googlemaps/react-wrapper": "^1.2.0",
+		"react-icons": "^5.7.0",
+		"recharts": "^3.10.1"
+	},
+	"keywords": [
+		"react",
+		"react-component",
+		"map",
+		"google-maps",
+		"gpx",
+		"geojson",
+		"route",
+		"route-profile",
+		"track",
+		"elevation",
+		"elevation-profile",
+		"chart",
+		"visualization"
+	],
+	"bugs": {
+		"url": "https://github.com/wimenxior371/react-route-profile/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/wimenxior371/react-route-profile.git"
+	},
+	"license": "MIT"
 }

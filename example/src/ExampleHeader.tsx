@@ -1,5 +1,6 @@
 import type { Ref } from "react";
 import { Link } from "react-scroll";
+import { version } from "../../package.json";
 import styles from "./App.module.css";
 
 interface ExampleHeaderProps {
@@ -18,7 +19,9 @@ export const ExampleHeader = ({
   return (
     <header ref={refHeader} className={styles.header}>
       <div>
-        <h1 className={styles.title}>react-route-profile</h1>
+        <h1 className={styles.title}>
+          react-route-profile <span className={styles.version}>{version}</span>
+        </h1>
         <h2 className={styles.subtitle}>
           A React component to alternate map + route profile, similar to
           Trailforks, Outdooractive, Komoot, or Bikemap.
